@@ -36,7 +36,6 @@ alias la='ls -a'
 alias lla='ls -la'
 alias cp='cp -iv'
 alias mv='mv -iv'
-alias weather='curl http://wttr.in/66442'
 alias myextip='curl http://ipecho.net/plain && printf "\n"'
 alias vi='vim'
 
