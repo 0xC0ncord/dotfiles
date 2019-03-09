@@ -29,8 +29,6 @@ gpgconf --launch gpg-agent
 
 alias ls='ls -hN --color=auto --group-directories-first'
 alias grep='grep --color=auto'
-alias ccat='highlight --out-format=ansi --force'
-alias cat='ccat'
 alias youtube-dl='youtube-dl --add-metadata -ic'
 
 alias ll='ls -l'
@@ -42,6 +40,8 @@ alias weather='curl http://wttr.in/66442'
 alias myextip='curl http://ipecho.net/plain && printf "\n"'
 alias vi='vim'
 
-alias termtrack='termtrack -figmntxo 1'
-alias sshfs-megumin="sshfs -o IdentityFile=/home/shizune/.ssh/id_rsa_yubikey.pub,reconnect,no_readahead,cache_timeout=115200,attr_timeout=115200 -p 2222 shizune@megumin.fuwafuwatime.moe:/mnt/raid/home/shizune /mnt/megumin"
-alias sshfs-torrents="sshfs -o IdentityFile=/home/shizune/.ssh/id_rsa_yubikey.pub,reconnect,no_readahead,cache_timeout=115200,attr_timeout=115200 -p 2222 shizune@megumin.fuwafuwatime.moe:/mnt/raid/torrents /mnt/torrents"
+# The below aliases require additional dependencies
+if [ $(which 'highlight') ]; then
+    alias ccat='highlight --out-format=ansi --force'
+    alias cat='ccat'
+fi
