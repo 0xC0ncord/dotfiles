@@ -1,1 +1,10 @@
-.standalone_profile
+# Everything first
+*
+
+# But not the good stuff
+!.bashrc
+!.bash_profile
+!.profile
+!.standalone_profile
+!LICENSE
+!README
