@@ -6,4 +6,4 @@ if [[ -f ~/.bashrc ]] ; then
 	. ~/.bashrc
 fi
 
-. ~/.profile
+[ -f ~/.profile ] && . ~/.profile
