@@ -1,0 +1,47 @@
+# /etc/skel/.bashrc
+#
+# This file is sourced by all *interactive* bash shells on startup,
+# including some apparently interactive shells such as scp and rcp
+# that can't tolerate any output.  So make sure this doesn't display
+# anything or bad things will happen !
+
+
+# Test for an interactive shell.  There is no need to set anything
+# past this point for scp and rcp, and it's important to refrain from
+# outputting anything in those cases.
+if [[ $- != *i* ]] ; then
+	# Shell is non-interactive.  Be done now!
+	return
+fi
+
+
+# Put your fun stuff here.
+
+stty -ixon              # Disable CTRL-S and CTRL-Q
+shopt -s autocd         # Allows cding into a directory by just typing its name
+set -o vi               # Enable bash VI mode
+HISTSIZE= HISTFILESIZE= # Infinite history
+PATH="$PATH:/usr/local/bin:/usr/share/bin:$HOME/.local/bin"
+
+export GPG_TTY="$(tty)"
+export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
+gpgconf --launch gpg-agent
+
+alias ls='ls -hN --color=auto --group-directories-first'
+alias grep='grep --color=auto'
+alias ccat='highlight --out-format=ansi --force'
+alias cat='ccat'
+alias youtube-dl='youtube-dl --add-metadata -ic'
+
+alias ll='ls -l'
+alias la='ls -a'
+alias lla='ls -la'
+alias cp='cp -iv'
+alias mv='mv -iv'
+alias weather='curl http://wttr.in/66442'
+alias myextip='curl http://ipecho.net/plain && printf "\n"'
+alias vi='vim'
+
+alias termtrack='termtrack -figmntxo 1'
+alias sshfs-megumin="sshfs -o IdentityFile=/home/shizune/.ssh/id_rsa_yubikey.pub,reconnect,no_readahead,cache_timeout=115200,attr_timeout=115200 -p 2222 shizune@megumin.fuwafuwatime.moe:/mnt/raid/home/shizune /mnt/megumin"
+alias sshfs-torrents="sshfs -o IdentityFile=/home/shizune/.ssh/id_rsa_yubikey.pub,reconnect,no_readahead,cache_timeout=115200,attr_timeout=115200 -p 2222 shizune@megumin.fuwafuwatime.moe:/mnt/raid/torrents /mnt/torrents"
