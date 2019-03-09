@@ -41,6 +41,6 @@ alias vi='vim'
 
 # The below aliases require additional dependencies
 if $(which 'highlight' &> /dev/null) ; then
-    alias ccat='highlight --out-format=ansi --force'
+    alias ccat='highlight --out-format=ansi --stdout --force'
     alias cat='ccat'
 fi
