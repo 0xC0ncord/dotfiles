@@ -40,7 +40,7 @@ alias myextip='curl http://ipecho.net/plain && printf "\n"'
 alias vi='vim'
 
 # The below aliases require additional dependencies
-if [ $(which 'highlight' &> /dev/null) ]; then
+if $(which 'highlight' &> /dev/null) ; then
     alias ccat='highlight --out-format=ansi --force'
     alias cat='ccat'
 fi
