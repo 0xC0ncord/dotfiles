@@ -25,7 +25,7 @@ PATH="$PATH:/usr/local/bin:/usr/share/bin:$HOME/.local/bin"
 
 export GPG_TTY="$(tty)"
 export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
-gpgconf --launch gpg-agent
+gpgconf --launch gpg-agent > /dev/null
 
 alias ls='ls -hN --color=auto --group-directories-first'
 alias grep='grep --color=auto'
