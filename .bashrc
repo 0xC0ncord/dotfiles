@@ -66,7 +66,9 @@ make_ps1() {
 
 # Git prompt
 git_prompt() {
-    git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
+    if $(which 'git' &> /dev/null) && [[ $(basename $(git rev-parse --show-toplevel)) != $(whoami) ]]; then
+        git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
+    fi
 }
 
 export PS1=$(make_ps1)
