@@ -58,10 +58,11 @@ make_ps1() {
 
     # If we don't have much room for typing, use the 2-line prompt
     if [[ $(tput cols) -le $((${#pc} + 48)) || ${#pc} -gt 60 ]]; then
-        echo "\[\033[01;34m\]╭\[\033[00m\] $(echo $p | sed 's/\ \([0-9;\[\$]*m\\\]\)*$//')\n\[\033[01;34m\]╰╼ \$\[\033[00m\] "
+        ps1="\[\033[01;34m\]╭\[\033[00m\] $(echo $p | sed 's/\ \([0-9;\[\$]*m\\\]\)*$//')\n\[\033[01;34m\]╰╼ \$\[\033[00m\] "
     else
-        echo "$p"
+        ps1="$p"
     fi
+    echo "${ps1@P}"
 }
 
 # Git prompt
@@ -71,4 +72,4 @@ git_prompt() {
     fi
 }
 
-export PS1=$(make_ps1)
+export PS1="\$(make_ps1)"
