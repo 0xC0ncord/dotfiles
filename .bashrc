@@ -23,13 +23,14 @@ set -o vi               # Enable bash VI mode
 HISTSIZE= HISTFILESIZE= # Infinite history
 PATH="$PATH:/usr/local/bin:/usr/share/bin:$HOME/.local/bin"
 
-export GPG_TTY="$(tty)"
-export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
-gpgconf --launch gpg-agent > /dev/null
+if $(which 'gpgconf' &> /dev/null); then
+    export GPG_TTY="$(tty)"
+    export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
+    gpgconf --launch gpg-agent > /dev/null
+fi
 
 alias ls='ls -hN --color=auto --group-directories-first'
 alias grep='grep --color=auto'
-alias youtube-dl='youtube-dl --add-metadata -ic'
 
 alias ll='ls -l'
 alias la='ls -a'
@@ -43,6 +44,9 @@ alias vi='vim'
 if $(which 'highlight' &> /dev/null) ; then
     alias ccat='highlight --out-format=ansi --stdout --force'
     alias cat='ccat'
+fi
+if $(which 'youtube-dl' &> /dev/null) ; then
+    alias youtube-dl='youtube-dl --add-metadata -ic'
 fi
 if $(which 'sxiv' &> /dev/null) ; then
     alias sxiv='sxiv -a'
