@@ -44,3 +44,29 @@ if $(which 'highlight' &> /dev/null) ; then
     alias ccat='highlight --out-format=ansi --stdout --force'
     alias cat='ccat'
 fi
+if $(which 'sxiv' &> /dev/null) ; then
+    alias sxiv='sxiv -a'
+fi
+
+# PS1 generation
+make_ps1() {
+    # PS1 itself
+    p="\[\033]0;\u@\h:\w\007\]\[\033[01;32m\]\u@\h\[\033[01;34m\] \w\[\033[01;33m\]\$(git_prompt) \[\033[01;34m\]\$\[\033[00m\] "
+
+    # PS1 but parsed and ANSI sequences removed; for length calculation
+    pc=$(echo "${p@P}" | perl -pe 's/\e([^\[\]]|\[.*?[a-zA-Z]|\].*?\a)//g' | col -b)
+
+    # If we don't have much room for typing, use the 2-line prompt
+    if [[ $(tput cols) -le $((${#pc} + 48)) || ${#pc} -gt 60 ]]; then
+        echo "\[\033[01;34m\]╭\[\033[00m\] $(echo $p | sed 's/\ \([0-9;\[\$]*m\\\]\)*$//')\n\[\033[01;34m\]╰╼ \$\[\033[00m\] "
+    else
+        echo "$p"
+    fi
+}
+
+# Git prompt
+git_prompt() {
+    git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
+}
+
+export PS1=$(make_ps1)
