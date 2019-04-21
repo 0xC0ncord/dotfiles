@@ -1,7 +1,8 @@
 #!/bin/sh
 
 export EDITOR="vim"
-export TERMINAL="urxvt"
+export VISUAL="vim"
+export TERMINAL="termite"
 export BROWSER="firefox"
 export READER="zathura"
 
