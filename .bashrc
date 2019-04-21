@@ -36,7 +36,7 @@ if $(which 'infocmp' &> /dev/null) && $(which 'tic' &>/dev/null) && ! $(infocmp 
 
             # Install termite's terminfo if possible
             if $(which 'curl' &> /dev/null) ; then
-                { curl 'https://github.com/thestinger/termite/blob/master/termite.terminfo' -o termite.terminfo && \
+                { curl 'https://raw.githubusercontent.com/thestinger/termite/master/termite.terminfo' -o termite.terminfo && \
                 tic -x termite.terminfo && \
                 rm termite.terminfo && \
                 echo "Info: successfully installed termite.terminfo" ; } || { echo "Warning: error while installing termite.terminfo, falling back to xterm-256color" && export TERM='xterm-256color' ; }
