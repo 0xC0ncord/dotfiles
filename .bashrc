@@ -29,6 +29,28 @@ if $(which 'gpgconf' &> /dev/null); then
     gpgconf --launch gpg-agent > /dev/null
 fi
 
+# Set proper TERM, if required
+if $(which 'infocmp' &> /dev/null) && $(which 'tic' &>/dev/null) && ! $(infocmp &>/dev/null) ; then
+    case $TERM in
+        "xterm-termite")
+
+            # Install termite's terminfo if possible
+            if $(which 'curl' &> /dev/null) ; then
+                { curl 'https://github.com/thestinger/termite/blob/master/termite.terminfo' -o termite.terminfo && \
+                tic -x termite.terminfo && \
+                rm termite.terminfo && \
+                echo "Info: successfully installed termite.terminfo" ; } || { echo "Warning: error while installing termite.terminfo, falling back to xterm-256color" && export TERM='xterm-256color' ; }
+            else
+                echo "Warning: could not install termite.terminfo because 'curl' not found in PATH, falling back to xterm-256color"
+                export TERM='xterm-256color'
+            fi
+            ;;
+        *)
+            echo "Warning: unsupported TERM $TERM"
+            ;;
+    esac
+fi
+
 alias ls='ls -hN --color=auto --group-directories-first'
 alias grep='grep --color=auto'
 
@@ -50,6 +72,9 @@ if $(which 'youtube-dl' &> /dev/null) ; then
 fi
 if $(which 'sxiv' &> /dev/null) ; then
     alias sxiv='sxiv -a'
+fi
+if $(which 'desmume' &> /dev/null) ; then
+    alias sxiv='desmume --cpu-mode=1'
 fi
 
 # PS1 generation
