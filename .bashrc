@@ -21,6 +21,7 @@ stty -ixon              # Disable CTRL-S and CTRL-Q
 shopt -s autocd         # Allows cding into a directory by just typing its name
 set -o vi               # Enable bash VI mode
 HISTSIZE= HISTFILESIZE= # Infinite history
+shopt -s histappend     # Append to the history, don't overwrite it
 PATH="$PATH:/usr/local/bin:/usr/share/bin:$HOME/.local/bin"
 
 if $(which 'gpgconf' &> /dev/null); then
@@ -79,6 +80,9 @@ if $(which 'desmume' &> /dev/null) ; then
     alias sxiv='desmume --cpu-mode=1'
 fi
 
+# Set GIT_DISCOVERY_ACROSS_FILESYSTEM to ensure git prompt works beyond filesystem boundaries
+export GIT_DISCOVERY_ACROSS_FILESYSTEM=1
+
 # PS1 generation
 make_ps1() {
     # PS1 itself
@@ -98,7 +102,7 @@ make_ps1() {
 
 # Git prompt
 git_prompt() {
-    if $(which 'git' &> /dev/null) && [[ $(basename $(git rev-parse --show-toplevel)) != $(whoami) ]]; then
+    if $(which 'git' &> /dev/null) && [[ $(basename $(git rev-parse --show-toplevel 2>/dev/null) 2>/dev/null) != $(whoami) ]]; then
         git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
     fi
 }
