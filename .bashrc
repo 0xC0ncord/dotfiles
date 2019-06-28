@@ -23,6 +23,7 @@ set -o vi               # Enable bash VI mode
 HISTSIZE= HISTFILESIZE= # Infinite history
 shopt -s histappend     # Append to the history, don't overwrite it
 PATH="$PATH:/usr/local/bin:/usr/share/bin:$HOME/.local/bin"
+GOPATH="$HOME/.go"
 
 if $(which 'gpgconf' &> /dev/null); then
     export GPG_TTY="$(tty)"
@@ -86,7 +87,7 @@ export GIT_DISCOVERY_ACROSS_FILESYSTEM=1
 # PS1 generation
 make_ps1() {
     # PS1 itself
-    p="\[\033]0;\u@\h:\w\007\]\[\033[01;32m\]\u@\h\[\033[01;34m\] \w\[\033[01;33m\]\$(git_prompt) \[\033[01;34m\]\$\[\033[00m\] "
+    p="\[\033]0;\u@\h:\w\007\]\[\033[01;32m\]\u@\h\[\033[01;34m\] \w\[\033[01;33m\]\$(git_prompt) \[\033[01;34m\]\\$\[\033[00m\] "
 
     # PS1 but parsed and ANSI sequences removed; for length calculation
     pc=$(echo "${p@P}" | perl -pe 's/\e([^\[\]]|\[.*?[a-zA-Z]|\].*?\a)//g' | col -b)
