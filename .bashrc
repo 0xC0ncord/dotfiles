@@ -25,6 +25,10 @@ shopt -s histappend     # Append to the history, don't overwrite it
 PATH="$PATH:/usr/local/bin:/usr/share/bin:$HOME/.local/bin"
 GOPATH="$HOME/.go"
 
+if [ -n "$DESKTOP_SESSION" ]; then
+    eval $(gnome-keyring-daemon --start)
+fi
+
 if $(which 'gpgconf' &> /dev/null); then
     export GPG_TTY="$(tty)"
     export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
