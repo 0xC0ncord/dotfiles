@@ -92,7 +92,7 @@ make_ps1() {
     pc=$(echo "${p@P}" | perl -pe 's/\e([^\[\]]|\[.*?[a-zA-Z]|\].*?\a)//g' | col -b)
 
     # If we don't have much room for typing, use the 2-line prompt
-    if [[ $(tput cols) -le $((${#pc} + 48)) || ${#pc} -gt 60 ]]; then
+    if [[ $(tput cols) -le $((${#pc} + 48)) ]]; then
         ps1="\[\033[01;34m\]╭\[\033[00m\] $(echo $p | sed 's/\ \([0-9;\[\$]*m\\\]\)*$//')\n\[\033[01;34m\]╰╼ \$\[\033[00m\] "
     else
         ps1="$p"
