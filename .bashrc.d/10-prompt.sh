@@ -3,6 +3,24 @@
 # Set GIT_DISCOVERY_ACROSS_FILESYSTEM to ensure git prompt works beyond filesystem boundaries
 export GIT_DISCOVERY_ACROSS_FILESYSTEM=1
 
+# Git prompt
+git_prompt() {
+    if $(which 'git' &> /dev/null); then
+        TOPLEVEL="$(git rev-parse --show-toplevel 2>/dev/null)"
+        if [[ -n "$TOPLEVEL" && $(basename "$TOPLEVEL" 2>/dev/null) != $(whoami) ]]; then
+            if [[ -z "$(git branch)" ]]; then
+                printf " (master, empty)"
+            else
+                printf " ($(git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/')"
+                if [[ -n "$(git diff --shortstat)" ]]; then GIT_SYMBOLS="*"; fi
+                if [[ -n "$(git ls-files ${TOPLEVEL} --exclude-standard --others)" ]]; then GIT_SYMBOLS="${GIT_SYMBOLS}%%"; fi
+                if [[ -n "${GIT_SYMBOLS}" ]]; then printf " ${GIT_SYMBOLS}"; fi
+                if [[ -n "$(git rev-parse --short HEAD 2>/dev/null)" ]]; then printf ", $(git rev-parse --short HEAD | sed -e 's/\(.*\)/\1\)/')"; fi
+            fi
+        fi
+    fi
+}
+
 # PS1 generation
 make_PS1() {
     # PS1 itself
@@ -37,22 +55,6 @@ make_PS1() {
         echo "$(bash --rcfile <(echo "PS1='$PS1'") -i <<<'' 2>&1 | sed ':;$!{N;b};s/^\(.*\)*\(.*\)\n\2exit$/\2/p;d')"
     else
         echo "${PS1@P}"
-    fi
-}
-
-# Git prompt
-git_prompt() {
-    if $(which 'git' &> /dev/null); then
-        TOPLEVEL="$(git rev-parse --show-toplevel 2>/dev/null)"
-        if [[ -n "$TOPLEVEL" && $(basename "$TOPLEVEL" 2>/dev/null) != $(whoami) ]]; then
-            if [[ -z "$(git branch)" ]]; then
-                printf " (master, empty)"
-            else
-                printf " ($(git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/')"
-                if [[ -n "$(git status -s -uno)" ]]; then printf " *"; fi
-                if [[ -n "$(git rev-parse --short HEAD 2>/dev/null)" ]]; then printf ", $(git rev-parse --short HEAD | sed -e 's/\(.*\)/\1\)/')"; fi
-            fi
-        fi
     fi
 }
 
