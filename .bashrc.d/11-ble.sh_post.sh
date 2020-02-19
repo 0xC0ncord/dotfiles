@@ -9,3 +9,4 @@ unset BLESH_ENABLE
 
 # Options
 bleopt complete_auto_complete=
+bleopt history_share=1              # Sync history to $HISTFILE after every command
