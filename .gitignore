@@ -5,3 +5,7 @@
 !.bashrc
 !.bash_profile
 !.profile
+!.bashrc.d/
+!.bashrc.d/**
+!.profile.d/
+!.profile.d/**
