@@ -9,3 +9,7 @@
 !.bashrc.d/**
 !.profile.d/
 !.profile.d/**
+
+# And now specific ignores
+.bashrc.d/submodules/
+.profile.d/submodules/

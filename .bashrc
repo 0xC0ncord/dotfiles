@@ -16,10 +16,46 @@ fi
 
 # Put your fun stuff here.
 
-for FILE in $HOME/.bashrc.d/*.sh ; do
-    source "$FILE"
+# .bashrc.d
+BASHRC_SCRIPTS=$HOME/.bashrc.d/*.sh
+# Pre-scripts
+for FILE in $BASHRC_SCRIPTS ; do
+    if [[ $(printf $FILE | grep '_pre\.sh$') ]]; then
+        source "$FILE"
+    fi
 done
+# Main scripts
+for FILE in $BASHRC_SCRIPTS ; do
+    if [[ ! $(printf $FILE | grep '_pre\.sh$') ]] && [[ ! $(printf $FILE | grep '_post\.sh$') ]]; then
+        source "$FILE"
+    fi
+done
+# Post-scripts
+for FILE in $BASHRC_SCRIPTS ; do
+    if [[ $(printf $FILE | grep '_post\.sh$') ]]; then
+        source "$FILE"
+    fi
+done
+unset BASHRC_SCRIPTS
 
-for FILE in $HOME/.profile.d/*.sh ; do
-    source "$FILE"
+# .profile.d
+PROFILE_SCRIPTS=$HOME/.profile.d/*.sh
+# Pre-scripts
+for FILE in $PROFILE_SCRIPTS ; do
+    if [[ $(printf $FILE | grep '_pre\.sh$') ]]; then
+        source "$FILE"
+    fi
 done
+# Main scripts
+for FILE in $PROFILE_SCRIPTS ; do
+    if [[ ! $(printf $FILE | grep '_pre\.sh$') ]] && [[ ! $(printf $FILE | grep '_post\.sh$') ]]; then
+        source "$FILE"
+    fi
+done
+# Post-scripts
+for FILE in $PROFILE_SCRIPTS ; do
+    if [[ $(printf $FILE | grep '_post\.sh$') ]]; then
+        source "$FILE"
+    fi
+done
+unset PROFILE_SCRIPTS
