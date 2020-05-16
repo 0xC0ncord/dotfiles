@@ -30,4 +30,5 @@ fi
 if [[ -e $HOME/.gpg-agent-info ]]; then
     source $HOME/.gpg-agent-info
     export GPG_AGENT_INFO SSH_AUTH_SOCK SSH_AGENT_PID
+    gpg-connect-agent updatestartuptty /bye 2>&1 > /dev/null
 fi
