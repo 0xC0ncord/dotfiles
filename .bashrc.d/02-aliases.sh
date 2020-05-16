@@ -8,6 +8,7 @@ alias la='ls -a'
 alias lla='ls -la'
 alias cp='cp -iv'
 alias mv='mv -iv'
+alias rm='rm -iv'
 alias myextip='curl http://ipecho.net/plain && printf "\n"'
 alias vi='vim'
 
@@ -20,6 +21,10 @@ if $(which 'highlight' &> /dev/null) ; then
         alias cat='ccat'
     fi
 fi
+if $(which 'src-hilite-lesspipe.sh' &> /dev/null) ; then
+    export LESSOPEN="| /usr/bin/src-hilite-lesspipe.sh %s"
+    export LESS=' -R '
+fi
 if $(which 'youtube-dl' &> /dev/null) ; then
     alias youtube-dl='youtube-dl --add-metadata -ic'
 fi
@@ -29,4 +34,3 @@ fi
 if $(which 'desmume' &> /dev/null) ; then
     alias sxiv='desmume --cpu-mode=1'
 fi
-
