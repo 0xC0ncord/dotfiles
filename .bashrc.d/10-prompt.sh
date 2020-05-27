@@ -69,5 +69,8 @@ _make_PS1() {
     export PS1
 }
 
-if [[ -z ${PROMPT_COMMAND} ]]; then PROMPT_COMMAND="_make_PS1"; else PROMPT_COMMAND="${PROMPT_COMMAND}; _make_PS1"; fi
-export PROMPT_COMMAND
+if [[ -z ${PROMPT_COMMAND} ]]; then
+    export PROMPT_COMMAND="_make_PS1"
+elif [[ ${PROMPT_COMMAND} != *"_make_PS1"* ]]; then
+    export PROMPT_COMMAND="${PROMPT_COMMAND}; _make_PS1"
+fi
