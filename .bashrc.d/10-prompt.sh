@@ -12,7 +12,7 @@ _sed_escape() {
 _selinux_prompt() {
     CONTEXT="$(id -Z 2>/dev/null)"
     if [[ $? == 0 ]]; then
-        printf " ($(printf ${CONTEXT} | awk -F: '{print $NF}'))"
+        printf " ($(printf ${CONTEXT} | awk -F: '{print $3}'))"
     fi
 }
 
