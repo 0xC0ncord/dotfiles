@@ -1,10 +1,11 @@
 #!/bin/sh
 
-stty -ixon                      # Disable CTRL-S and CTRL-Q
-shopt -s autocd                 # Allows cding into a directory by just typing its name
-set -o vi                       # Enable bash VI mode
-export HISTSIZE= HISTFILESIZE=  # Infinite history
-shopt -s histappend             # Append to the history, don't overwrite it
+stty -ixon                                              # Disable CTRL-S and CTRL-Q
+shopt -s autocd                                         # Allows cding into a directory by just typing its name
+set -o vi                                               # Enable bash VI mode
+export HISTSIZE= HISTFILESIZE=                          # Infinite history
+shopt -s histappend                                     # Append to the history, don't overwrite it
+export PROMPT_COMMAND="history -a;${PROMPT_COMMAND}"    # Append to the history immediately after every command
 
 export PATH="$PATH:/usr/local/bin:/usr/share/bin:$HOME/.local/bin"
 export GOPATH="$HOME/.go"
