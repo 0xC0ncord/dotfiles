@@ -18,18 +18,18 @@ _selinux_prompt() {
 
 # Git prompt
 _git_prompt() {
-    if $(which 'git' &> /dev/null); then
-        local TOPLEVEL="$(git rev-parse --show-toplevel 2>/dev/null)"
-        if [[ -n "$TOPLEVEL" && $(basename "$TOPLEVEL" 2>/dev/null) != $(whoami) ]]; then
-            if [[ -z "$(git branch)" ]]; then
-                printf "(master, empty)"
-            else
-                printf "($(git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/')"
-                if [[ -n "$(git diff --shortstat)" ]]; then GIT_SYMBOLS="*"; fi
-                if [[ -n "$(git ls-files ${TOPLEVEL} --exclude-standard --others)" ]]; then GIT_SYMBOLS="${GIT_SYMBOLS}%%"; fi
-                if [[ -n "${GIT_SYMBOLS}" ]]; then printf " ${GIT_SYMBOLS}"; fi
-                if [[ -n "$(git rev-parse --short HEAD 2>/dev/null)" ]]; then printf ", $(git rev-parse --short HEAD | sed -e 's/\(.*\)/\1\)/')"; fi
-            fi
+    local TOPLEVEL="$(git rev-parse --show-toplevel 2>/dev/null)"
+    if [[ $? && -n $TOPLEVEL && $TOPLEVEL != $HOME ]]; then
+        local BRANCH="$(git branch 2> /dev/null)"
+        if [[ -z $BRANCH ]]; then
+            printf "(master, empty)"
+        else
+            printf $(sed -e '/^[^*]/d;s/^\* \(.*\)/(\1/' <<< $BRANCH)
+            if [[ -n "$(git diff --shortstat)" ]]; then GIT_SYMBOLS="*"; fi
+            if [[ -n "$(git ls-files ${TOPLEVEL} --exclude-standard --others)" ]]; then GIT_SYMBOLS="${GIT_SYMBOLS}%%"; fi
+            if [[ -n "${GIT_SYMBOLS}" ]]; then printf " ${GIT_SYMBOLS}"; fi
+            local HEAD="$(git rev-parse --short HEAD 2>/dev/null)"
+            if [[ -n $HEAD ]]; then printf ", $(sed -e 's/\(.*\)/\1\)/' <<< $HEAD)"; fi
         fi
     fi
 }
