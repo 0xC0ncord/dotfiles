@@ -60,7 +60,7 @@ _make_PS1() {
             for (i in P) {
                 gsub(" "i, C[i], R)
             }
-            if (COLS <= L + 48) {
+            if (COLS <= L + 48 || L > COLS * 0.66) {
                 R=C[1]"╭ "R"\n"C[1]"╰╼ "
             }
             R=R""C[1]"$"
@@ -88,7 +88,7 @@ _make_PS1() {
             for (i in P) {
                 gsub("`"i, C[i], R)
             }
-            if (COLS <= L + 48) {
+            if (COLS <= L + 48 || L > COLS * 0.66) {
                 R=C[1]"╭ "R"\n"C[1]"╰╼ "
             }
             R=R""C[1]"$"
