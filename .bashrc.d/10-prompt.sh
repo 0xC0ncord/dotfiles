@@ -78,7 +78,7 @@ _make_PS1() {
             C[3]="\\[\\033[01;33m\\]"
             for (i in P) {
                 if (length(P[i]) != 0) {
-                    R=R" "i""P[i]" "
+                    R=R"`"i""P[i]" "
                 }
             }
             L=length(R)
@@ -86,7 +86,7 @@ _make_PS1() {
                 R=substr(R,1,COLS - 1)"…"
             }
             for (i in P) {
-                gsub(" "i, C[i], R)
+                gsub("`"i, C[i], R)
             }
             if (COLS <= L + 48) {
                 R=C[1]"╭ "R"\n"C[1]"╰╼ "
