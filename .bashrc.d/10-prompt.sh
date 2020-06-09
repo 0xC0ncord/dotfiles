@@ -10,7 +10,7 @@ _sed_escape() {
 
 # SELinux prompt
 _selinux_prompt() {
-    CONTEXT="$(id -Z 2>/dev/null)"
+    local CONTEXT="$(id -Z 2>/dev/null)"
     if [[ $? == 0 ]]; then
         printf " ($(printf ${CONTEXT} | awk -F: '{print $3}'))"
     fi
@@ -19,7 +19,7 @@ _selinux_prompt() {
 # Git prompt
 _git_prompt() {
     if $(which 'git' &> /dev/null); then
-        TOPLEVEL="$(git rev-parse --show-toplevel 2>/dev/null)"
+        local TOPLEVEL="$(git rev-parse --show-toplevel 2>/dev/null)"
         if [[ -n "$TOPLEVEL" && $(basename "$TOPLEVEL" 2>/dev/null) != $(whoami) ]]; then
             if [[ -z "$(git branch)" ]]; then
                 printf " (master, empty)"
@@ -39,32 +39,28 @@ _make_PS1() {
     # PS1 itself
     if [[ $EUID -eq 0 ]]; then
         # Root's prompt
-        P="\[\033]0;\h:\w\007\]\[\033[01;31m\]\h\[\033[01;34m\] \w\[\033[01;35m\]\$(_selinux_prompt)\[\033[01;33m\]\$(_git_prompt) \[\033[01;34m\]\\$\[\033[00m\] "
+        local P="\[\033]0;\h:\w\007\]\[\033[01;31m\]\h\[\033[01;34m\] \w\[\033[01;35m\]\$(_selinux_prompt)\[\033[01;33m\]\$(_git_prompt) \[\033[01;34m\]\\$\[\033[00m\] "
     else
         # User prompt
-        P="\[\033]0;\u@\h:\w\007\]\[\033[01;32m\]\u@\h\[\033[01;34m\] \w\[\033[01;35m\]\$(_selinux_prompt)\[\033[01;33m\]\$(_git_prompt) \[\033[01;34m\]\\$\[\033[00m\] "
+        local P="\[\033]0;\u@\h:\w\007\]\[\033[01;32m\]\u@\h\[\033[01;34m\] \w\[\033[01;35m\]\$(_selinux_prompt)\[\033[01;33m\]\$(_git_prompt) \[\033[01;34m\]\\$\[\033[00m\] "
     fi
 
     # PS1 but parsed and ANSI sequences removed; for length calculation
     if [[ ${BASH_VERSION:0:1} -lt 4 ]] || [[ ${BASH_VERSION:2:1} -lt 4 ]]; then
         # @P operation is unsupported in Bash < 4.4
-        PC=$(echo ${P} | sed "s/\\\\\[\\\033.*\\\007\\\\\]//g;s/\\\\\[\\\033\\[\([0-9]\{2\};\)\?[0-9]\{2\}m\\\]//g;s/\\\u/$USER/g;s/\\\h/$(hostname)/g;s/\\\w/$(_sed_escape $(dirs +0))/g;s/\\$\x28_selinux_prompt\x29\\$\x28_git_prompt\x29/$(_sed_escape "$(_selinux_prompt) $(_git_prompt)")/g;s/\\\\\\$/$/g")
+        local PC=$(echo ${P} | sed "s/\\\\\[\\\033.*\\\007\\\\\]//g;s/\\\\\[\\\033\\[\([0-9]\{2\};\)\?[0-9]\{2\}m\\\]//g;s/\\\u/$USER/g;s/\\\h/$(hostname)/g;s/\\\w/$(_sed_escape $(dirs +0))/g;s/\\$\x28_selinux_prompt\x29\\$\x28_git_prompt\x29/$(_sed_escape "$(_selinux_prompt) $(_git_prompt)")/g;s/\\\\\\$/$/g")
     else
-        PC=$(echo "${P@P}" | perl -pe 's/\e([^\[\]]|\[.*?[a-zA-Z]|\].*?\a)//g' | col -b)
+        local PC=$(echo "${P@P}" | perl -pe 's/\e([^\[\]]|\[.*?[a-zA-Z]|\].*?\a)//g' | col -b)
     fi
 
     # If we don't have much room for typing, use the 2-line prompt
     # TODO truncate if still too long
-    COLS=$(tput cols)
+    local COLS=$(tput cols)
     if [[ ${COLS} -le $((${#PC} + 48)) ]]; then
         PS1="\[\033[01;34m\]╭\[\033[00m\] $(echo ${P} | sed 's/\ \([0-9;\[\$]*m\\\]\)*$//')\[\033[00m\]\n\[\033[01;34m\]╰╼ \$\[\033[00m\] "
     else
         PS1="${P}"
     fi
-
-    unset P
-    unset PC
-    unset COLS
 
     export PS1
 }
