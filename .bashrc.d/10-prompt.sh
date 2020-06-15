@@ -25,7 +25,7 @@ _git_prompt() {
             printf "(master, empty)"
         else
             printf $(sed -e '/^[^*]/d;s/^\* \(.*\)/(\1/' <<< $BRANCH)
-            if [[ -n "$(git diff --shortstat)" ]]; then GIT_SYMBOLS="*"; fi
+            if [[ -n "$(git status --short)" ]]; then GIT_SYMBOLS="*"; fi
             if [[ -n "$(git ls-files ${TOPLEVEL} --exclude-standard --others)" ]]; then GIT_SYMBOLS="${GIT_SYMBOLS}%%"; fi
             if [[ -n "${GIT_SYMBOLS}" ]]; then printf " ${GIT_SYMBOLS}"; fi
             local HEAD="$(git rev-parse --short HEAD 2>/dev/null)"
