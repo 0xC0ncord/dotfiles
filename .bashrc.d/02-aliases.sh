@@ -9,9 +9,10 @@ alias lla='ls -la'
 alias cp='cp -iv'
 alias mv='mv -iv'
 alias rm='rm -iv'
-alias myextip='curl http://ipecho.net/plain && printf "\n"'
 alias vi='vim'
 alias assh='ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no'
+alias myextip='curl http://ipecho.net/plain && printf "\n"'
+alias wttr='curl wttr.in'
 
 # The below aliases require additional dependencies
 if $(which 'highlight' &> /dev/null) ; then
