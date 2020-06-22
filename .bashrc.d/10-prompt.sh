@@ -27,6 +27,7 @@ _git_prompt() {
             printf $(sed -e '/^[^*]/d;s/^\* \(.*\)/(\1/' <<< "$BRANCH")
             if [[ -n "$(git status --short -uno)" ]]; then GIT_SYMBOLS="*"; fi
             if [[ -n "$(git ls-files ${TOPLEVEL} --exclude-standard --others)" ]]; then GIT_SYMBOLS="${GIT_SYMBOLS}%%"; fi
+            if [[ -n "$(git stash list)" ]]; then GIT_SYMBOLS="${GIT_SYMBOLS}#"; fi
             if [[ -n "${GIT_SYMBOLS}" ]]; then printf " ${GIT_SYMBOLS}"; fi
             local HEAD="$(git rev-parse --short HEAD 2>/dev/null)"
             if [[ -n $HEAD ]]; then printf ", $(sed -e 's/\(.*\)/\1\)/' <<< $HEAD)"; fi
