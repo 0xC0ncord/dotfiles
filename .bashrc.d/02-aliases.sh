@@ -11,6 +11,7 @@ alias mv='mv -iv'
 alias rm='rm -iv'
 alias vi='vim'
 alias assh='ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no'
+alias ascp='scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no'
 alias myextip='curl http://ipecho.net/plain && printf "\n"'
 alias wttr='curl wttr.in'
 
