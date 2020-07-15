@@ -15,7 +15,7 @@ ssh-add -L 2>/dev/null >/dev/null || rm -f $HOME/.gpg-agent-info
 # if no info file, start up potentially-new, working agent
 if [[ ! -e $HOME/.gpg-agent-info ]]; then
     # kill broken agent first
-    kill $(pgrep gpg-agent) 2>/dev/null
+    kill $(pgrep -U $UID gpg-agent) 2>/dev/null
     if which gpg-agent >/dev/null 2>&1 ; then
         [ -z $SSH_TTY ] || export GPG_TTY=$(tty)
         gpg-agent \
