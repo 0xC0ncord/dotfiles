@@ -281,11 +281,11 @@ autocmd FileType c nnoremap <buffer> <F8> :w <bar> !gcc -o %:r % && ./%:r<CR>
 autocmd FileType python nnoremap <buffer> <F8> :w <bar> !python %<CR>
 
 " IDE-like mappings
-inoremap <Tab><Space> <Esc>/<++><Enter>"_c4l
+"inoremap <Tab><Space> <Esc>/<++><Enter>"_c4l
 
-autocmd FileType html inoremap ;i <em></em><Space><++><Esc>FeT>i
-autocmd FileType html inoremap ;b <b></b><Space><++><Esc>FbT>i
-autocmd FileType html inoremap ;p <p></p><Enter><Enter><++><Esc>2ki
+"autocmd FileType html inoremap ;i <em></em><Space><++><Esc>FeT>i
+"autocmd FileType html inoremap ;b <b></b><Space><++><Esc>FbT>i
+"autocmd FileType html inoremap ;p <p></p><Enter><Enter><++><Esc>2ki
 
 
 
@@ -433,3 +433,32 @@ endfun
 autocmd FileType uc set ff=unix
 autocmd FileType uc retab
 autocmd FileType c,cpp,java,php,ruby,python,uc autocmd BufWritePre <buffer> :call <SID>StripTrailingWhitespace()
+
+function! BuildYCM(info)
+  " info is a dictionary with 3 fields
+  " - name:   name of the plugin
+  " - status: 'installed', 'updated', or 'unchanged'
+  " - force:  set on PlugInstall! or PlugUpdate!
+  if a:info.status == 'installed' || a:info.force
+    !./install.py --all
+  endif
+endfunction
+
+call plug#begin('~/.config/vim/plugins')
+Plug 'ycm-core/YouCompleteMe', { 'do': function('BuildYCM') }
+let g:ycm_global_ycm_extra_conf = '~/.config/vim/.ycm_extra_conf.py'
+let g:ycm_confirm_extra_conf = 0
+let g:ycm_auto_trigger = 1
+let g:ycm_error_symbol = '>>'
+let g:ycm_warning_symbol = '--'
+nmap <leader><Tab> <plug>(YCMHover)
+augroup MyYCMCustom
+  autocmd!
+  autocmd FileType c,cpp let b:ycm_hover = {
+    \ 'command': 'GetDoc',
+    \ 'syntax': &filetype
+    \ }
+augroup END
+
+Plug 'lervag/vimtex'
+call plug#end()
