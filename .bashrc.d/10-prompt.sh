@@ -11,7 +11,7 @@ _sed_escape() {
 # SELinux prompt
 _selinux_prompt() {
     local CONTEXT="$(id -Z 2>/dev/null)"
-    if [[ $? == 0 ]]; then
+    if [[ -n $CONTEXT ]]; then
         printf "($(awk -F: '{print $3}' <<< $CONTEXT))"
     fi
 }
