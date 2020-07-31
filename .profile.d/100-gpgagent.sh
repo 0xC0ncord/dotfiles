@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Runs a command under an alarm
+doalarm() { perl -e 'alarm shift; exec @ARGV' "$@"; }
+
 # if this is a remote session, quit
 [ -z $SSH_TTY ] || return
 
@@ -10,7 +13,7 @@ if [[ -e $HOME/.gpg-agent-info ]]; then
 fi
 
 # test existing agent, remove info file if not working
-ssh-add -L 2>/dev/null >/dev/null || rm -f $HOME/.gpg-agent-info
+doalarm 5 ssh-add -L 2>/dev/null >/dev/null || rm -f $HOME/.gpg-agent-info
 
 # if no info file, start up potentially-new, working agent
 if [[ ! -e $HOME/.gpg-agent-info ]]; then
