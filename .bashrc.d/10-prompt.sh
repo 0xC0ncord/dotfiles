@@ -38,7 +38,11 @@ _git_prompt() {
 # PS1 generation
 _make_PS1() {
     local COLS=$(tput cols)
-    local TITLE="\\[\\033]0;\\u@\\h:\\w\\007\\]"
+    if [[ $TERM != "linux" ]]; then
+        local TITLE="\\[\\033]0;\\u@\\h:\\w\\007\\]"
+    else
+        local TITLE=""
+    fi
     if [[ $EUID -eq 0 ]]; then
         export PS1="$TITLE$(awk -v COLS=$COLS -v HOSTNAME=$HOSTNAME -v CWD="$(dirs +0)" -v SELINUX="$(_selinux_prompt)" -v GIT="$(_git_prompt)" 'BEGIN {
             P[0]=HOSTNAME
