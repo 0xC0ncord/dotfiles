@@ -35,3 +35,5 @@ if [[ -e $HOME/.gpg-agent-info ]]; then
     export GPG_AGENT_INFO SSH_AUTH_SOCK SSH_AGENT_PID
     gpg-connect-agent updatestartuptty /bye 2>&1 > /dev/null
 fi
+
+unset doalarm
