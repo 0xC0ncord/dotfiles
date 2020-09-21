@@ -18,6 +18,19 @@ if $(which 'infocmp' &> /dev/null) && $(which 'tic' &>/dev/null) && ! $(infocmp 
                 export TERM='xterm-256color'
             fi
             ;;
+        "xterm-kitty")
+            if $(which 'curl' &> /dev/null) ; then
+                { curl -s 'https://github.com/kovidgoyal/kitty/raw/master/terminfo/kitty.terminfo' -o kitty.terminfo && \
+                tic -x kitty.terminfo && \
+                rm kitty.terminfo && \
+                reset && \
+                source /etc/profile && \
+                echo "Info: successfully installed kitty.terminfo" ; } || { echo "Warning: error while installing kitty.terminfo, falling back to xterm-256color" && export TERM='xterm-256color' ; }
+            else
+                echo "Warning: could not install kitty.terminfo because 'curl' not found in PATH, falling back to xterm-256color"
+                export TERM='xterm-256color'
+            fi
+            ;;
         *)
             echo "Warning: unsupported TERM $TERM"
             ;;
