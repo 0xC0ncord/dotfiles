@@ -1,4 +1,4 @@
-#!/bin
+#!/bin/bash
 stty -ixon                                                  # Disable CTRL-S and CTRL-Q
 shopt -s autocd                                             # Allows cding into a directory by just typing its name
 set -o vi                                                   # Enable bash VI mode
@@ -17,7 +17,7 @@ export GOPATH="$HOME/.go"
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_CACHE_HOME="$HOME/.cache"
 export XDG_DATA_HOME="$HOME/.local/share"
-export XDG_RUNTIME_DIR="$HOME/.local/run"
+export XDG_RUNTIME_DIR="${XDG_RUNTIME_DIR:-$HOME/.local/run}"
 
 export GTK_RC_FILES="$XDG_CONFIG_HOME"/gtk-1.0/gtkrc
 export GTK2_RC_FILES="$XDG_CONFIG_HOME"/gtk-2.0/gtkrc
