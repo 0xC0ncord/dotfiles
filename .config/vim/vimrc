@@ -433,6 +433,7 @@ endfun
 autocmd FileType uc set ff=unix
 autocmd FileType uc retab
 autocmd FileType c,cpp,java,php,ruby,python,uc autocmd BufWritePre <buffer> :call <SID>StripTrailingWhitespace()
+autocmd FileType j2,xml,yaml set shiftwidth=2 tabstop=2
 
 call plug#begin('~/.config/vim/plugins')
 
