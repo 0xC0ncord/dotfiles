@@ -10,9 +10,8 @@ _sed_escape() {
 
 # SELinux prompt
 _selinux_prompt() {
-    local CONTEXT="$(id -Z 2>/dev/null)"
-    if [[ -n $CONTEXT ]]; then
-        printf "($(awk -F: '{print $3}' <<< $CONTEXT))"
+    if [[ -e /proc/$$/attr/current ]]; then
+        printf "($(awk -F: '{print $3}' <<< $(tr -d '\0' </proc/$$/attr/current)))"
     fi
 }
 
