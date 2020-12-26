@@ -13,7 +13,7 @@ if [[ ! -d $HOME/.bashrc.d/submodules/ble.sh ]]; then
             git clone https://github.com/akinomyoga/ble.sh $HOME/.bashrc.d/submodules/ble.sh 2>&1 >/dev/null
             pushd $(pwd)
             cd $HOME/.bashrc.d/submodules/ble.sh
-            git checkout v0.3.3 2>&1 >/dev/null
+            git checkout v0.4.0-devel2>&1 >/dev/null
             make 2>&1 >/dev/null
             popd
         } || {
