@@ -1,0 +1,15 @@
+[user]
+	name = 0xC0ncord
+	email = me@concord.sh
+	signingkey = E6442094CEDEE36E7E01CD0D9BD9716CBD788521
+[core]
+    editor = vim
+[color]
+    ui = auto
+[commit]
+    gpgsign = true
+[alias]
+    lg1 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
+    lg2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
+    lg = !"git lg1"
+    track = "!f(){ git branch -r | grep -v '\\->' | while read remote; do git branch --track \"${remote#origin/}\" \"$remote\" 2>/dev/null; done; git fetch --all; git pull --all; }; f"
