@@ -20,21 +20,19 @@ fi
 BASHRC_SCRIPTS=$HOME/.bashrc.d/*.sh
 # Pre-scripts
 for FILE in $BASHRC_SCRIPTS ; do
-    if [[ $(printf $FILE | grep '_pre\.sh$') ]]; then
-        source "$FILE"
+    source "$FILE"
+    if declare -F pre &>/dev/null; then
+        pre
     fi
-done
-# Main scripts
-for FILE in $BASHRC_SCRIPTS ; do
-    if [[ ! $(printf $FILE | grep '_pre\.sh$') ]] && [[ ! $(printf $FILE | grep '_post\.sh$') ]]; then
-        source "$FILE"
+    if declare -F main &>/dev/null; then
+        main
     fi
-done
-# Post-scripts
-for FILE in $BASHRC_SCRIPTS ; do
-    if [[ $(printf $FILE | grep '_post\.sh$') ]]; then
-        source "$FILE"
+    if declare -F post &>/dev/null; then
+        post
     fi
+    unset pre
+    unset main
+    unset post
 done
 unset BASHRC_SCRIPTS
 
@@ -42,20 +40,18 @@ unset BASHRC_SCRIPTS
 PROFILE_SCRIPTS=$HOME/.profile.d/*.sh
 # Pre-scripts
 for FILE in $PROFILE_SCRIPTS ; do
-    if [[ $(printf $FILE | grep '_pre\.sh$') ]]; then
-        source "$FILE"
+    source "$FILE"
+    if declare -F pre &>/dev/null; then
+        pre
     fi
-done
-# Main scripts
-for FILE in $PROFILE_SCRIPTS ; do
-    if [[ ! $(printf $FILE | grep '_pre\.sh$') ]] && [[ ! $(printf $FILE | grep '_post\.sh$') ]]; then
-        source "$FILE"
+    if declare -F main &>/dev/null; then
+        main
     fi
-done
-# Post-scripts
-for FILE in $PROFILE_SCRIPTS ; do
-    if [[ $(printf $FILE | grep '_post\.sh$') ]]; then
-        source "$FILE"
+    if declare -F post &>/dev/null; then
+        post
     fi
+    unset pre
+    unset main
+    unset post
 done
 unset PROFILE_SCRIPTS

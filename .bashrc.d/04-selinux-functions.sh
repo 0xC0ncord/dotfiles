@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # sefindif - Find interface definitions that have a string that matches the
 # given regular expression

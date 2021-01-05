@@ -1,7 +1,4 @@
-#!/bin/bash
-
-# Set GIT_DISCOVERY_ACROSS_FILESYSTEM to ensure git prompt works beyond filesystem boundaries
-export GIT_DISCOVERY_ACROSS_FILESYSTEM=1
+#!/usr/bin/env bash
 
 # Helper functions
 _sed_escape() {
@@ -101,8 +98,13 @@ _make_PS1() {
     fi
 }
 
-if [[ -z ${PROMPT_COMMAND} ]]; then
-    export PROMPT_COMMAND="_make_PS1"
-elif [[ "${PROMPT_COMMAND}" != *"_make_PS1"* ]]; then
-    export PROMPT_COMMAND="${PROMPT_COMMAND};_make_PS1"
-fi
+main() {
+    # Set GIT_DISCOVERY_ACROSS_FILESYSTEM to ensure git prompt works beyond filesystem boundaries
+    export GIT_DISCOVERY_ACROSS_FILESYSTEM=1
+
+    if [[ -z ${PROMPT_COMMAND} ]]; then
+        export PROMPT_COMMAND="_make_PS1"
+    elif [[ "${PROMPT_COMMAND}" != *"_make_PS1"* ]]; then
+        export PROMPT_COMMAND="${PROMPT_COMMAND};_make_PS1"
+    fi
+}

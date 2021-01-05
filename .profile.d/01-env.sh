@@ -1,7 +1,9 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
-export EDITOR="vim"
-export VISUAL="vim"
-export TERMINAL="termite"
-export BROWSER="chromium"
-export READER="zathura"
+main() {
+    export EDITOR="vim"
+    export VISUAL="vim"
+    export TERMINAL="termite"
+    export BROWSER="chromium"
+    export READER="zathura"
+}
