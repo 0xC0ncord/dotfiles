@@ -16,18 +16,13 @@ _selinux_prompt() {
 _git_prompt() {
     local TOPLEVEL="$(git rev-parse --show-toplevel 2>/dev/null)"
     if [[ $? && -n $TOPLEVEL && $TOPLEVEL != $HOME ]]; then
-        local BRANCH="$(git branch 2> /dev/null)"
-        if [[ -z $BRANCH ]]; then
-            printf "(master, empty)"
-        else
-            printf "$(sed -e '/^[^*]/d;s/^\* (\?\(.*\)/(\1/' <<< "$BRANCH")"
-            if [[ -n "$(git status --short -uno)" ]]; then GIT_SYMBOLS="*"; fi
-            if [[ -n "$(git ls-files ${TOPLEVEL} --exclude-standard --others)" ]]; then GIT_SYMBOLS="${GIT_SYMBOLS}%%"; fi
-            if [[ -n "$(git stash list)" ]]; then GIT_SYMBOLS="${GIT_SYMBOLS}#"; fi
-            if [[ -n "${GIT_SYMBOLS}" ]]; then printf " ${GIT_SYMBOLS}"; fi
-            local HEAD="$(git rev-parse --short HEAD 2>/dev/null)"
-            if [[ -n $HEAD ]]; then printf ", $(sed -e 's/\(.*\)/\1\)/' <<< $HEAD)"; fi
-        fi
+        printf "($(git branch --show-current)"
+        if [[ -n "$(git status --short -uno)" ]]; then GIT_SYMBOLS="*"; fi
+        if [[ -n "$(git ls-files ${TOPLEVEL} --exclude-standard --others | sed 1q)" ]]; then GIT_SYMBOLS="${GIT_SYMBOLS}%%"; fi
+        if [[ -n "$(git stash list)" ]]; then GIT_SYMBOLS="${GIT_SYMBOLS}#"; fi
+        if [[ -n "${GIT_SYMBOLS}" ]]; then printf " ${GIT_SYMBOLS}"; fi
+        local HEAD="$(git rev-parse --short HEAD 2>/dev/null || printf 'empty')"
+        if [[ -n $HEAD ]]; then printf ", $(sed -e 's/\(.*\)/\1\)/' <<< $HEAD)"; fi
     fi
 }
 
