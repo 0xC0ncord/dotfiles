@@ -1,5 +1,11 @@
 #!/usr/bin/env bash
 
+_append_to_path() {
+    if [[ $PATH != *"$1"* ]]; then
+        export PATH="$PATH:$1"
+    fi
+}
+
 main() {
     stty -ixon                                                  # Disable CTRL-S and CTRL-Q
     shopt -s autocd                                             # Allows cding into a directory by just typing its name
@@ -12,7 +18,9 @@ main() {
         export PROMPT_COMMAND="history -a;${PROMPT_COMMAND}"
     fi
 
-    export PATH="$PATH:/usr/local/bin:/usr/share/bin:$HOME/.local/bin"
+    _append_to_path /usr/local/bin
+    _append_to_path /usr/share/bin
+    _append_to_path $HOME/.local/bin
     export GOPATH="$HOME/.go"
 
     # Various options to force applications to use XDG and avoid $HOME clutter
@@ -31,4 +39,6 @@ main() {
     export VIMINIT=":source $XDG_CONFIG_HOME"/vim/vimrc
     export WGETRC="$XDG_CONFIG_HOME/wgetrc"
     export WINEPREFIX="$XDG_DATA_HOME"/wineprefixes/default
+
+    unset _append_to_path
 }
