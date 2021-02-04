@@ -4,8 +4,10 @@
 doalarm() { perl -e 'alarm shift; exec @ARGV' "$@"; }
 
 main() {
-    # if this is a remote session, quit
-    [ -z $SSH_TTY ] || return
+    # if this is a remote or nested session, quit
+    if [[ -n "$SSH_CLIENT" || -n "$SSH_TTY" || "$SHLVL" != "0" ]]; then
+        return
+    fi
 
     # check for existing running agent info
     if [[ -e $HOME/.gpg-agent-info ]]; then
