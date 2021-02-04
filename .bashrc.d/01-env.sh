@@ -27,7 +27,11 @@ main() {
     export XDG_CONFIG_HOME="$HOME/.config"
     export XDG_CACHE_HOME="$HOME/.cache"
     export XDG_DATA_HOME="$HOME/.local/share"
-    export XDG_RUNTIME_DIR="${XDG_RUNTIME_DIR:-$HOME/.local/run}"
+    if [[ -d /run/user/$UID ]]; then
+        export XDG_RUNTIME_DIR="${XDG_RUNTIME_DIR:-/run/user/$UID}"
+    else
+        export XDG_RUNTIME_DIR="${XDG_RUNTIME_DIR:-$HOME/.local/run}"
+    fi
 
     export GTK_RC_FILES="$XDG_CONFIG_HOME"/gtk-1.0/gtkrc
     export GTK2_RC_FILES="$XDG_CONFIG_HOME"/gtk-2.0/gtkrc
