@@ -16,9 +16,9 @@ _selinux_prompt() {
 _git_prompt() {
     local TOPLEVEL="$(git rev-parse --show-toplevel 2>/dev/null)"
     if [[ $? && -n $TOPLEVEL && $TOPLEVEL != $HOME ]]; then
-        local BRANCH="$(git branch --show-current 2>/dev/null || sed -e '/^[^*]/d;s/^\* (\?\(.*\)))\?/\1/' <<< "$(git branch 2>/dev/null)" | tr -d '\n')"
-        if [[ $BRANCH == *" "* ]]; then
-            BRANCH="[$BRANCH]"
+        local BRANCH="$(git branch --show-current 2>/dev/null)"
+        if [[ -z $BRANCH ]]; then
+            BRANCH="[$(sed -e '/^[^*]/d;s/^\* (\?\(.*\)))\?/\1/' <<< "$(git branch 2>/dev/null)" | tr -d '\n')]"
         fi
         printf "($BRANCH"
         if [[ -n "$(git status --short -uno)" ]]; then GIT_SYMBOLS="*"; fi
