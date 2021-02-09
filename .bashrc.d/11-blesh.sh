@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-pre() {
+function pre {
     export BLESH_ENABLE=1
 
     # Don't run if not enabled
@@ -30,7 +30,7 @@ pre() {
     source $HOME/.bashrc.d/submodules/ble.sh/out/ble.sh --noattach
 }
 
-post() {
+function post {
     # Don't run if not enabled
     if [[ $BLESH_ENABLE -eq 0 ]]; then unset BLESH_ENABLE; return; fi
     unset BLESH_ENABLE

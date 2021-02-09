@@ -2,7 +2,7 @@
 
 # sefindif - Find interface definitions that have a string that matches the
 # given regular expression
-sefindif() {
+function sefindif {
     REGEXP="$1";
     if [ -d ${POLICY_LOCATION}/policy/modules ];
     then
@@ -22,7 +22,7 @@ sefindif() {
 }
 
 # seshowif - Show the interface definition
-seshowif() {
+function seshowif {
     INTERFACE="$1";
     if [ -d ${POLICY_LOCATION}/policy/modules ];
     then
@@ -43,7 +43,7 @@ seshowif() {
 
 # sefinddef - Find macro definitions that have a string that matches the given
 # regular expression
-sefinddef() {
+function sefinddef {
     REGEXP="$1";
     if [ -d ${POLICY_LOCATION}/policy/support ];
     then

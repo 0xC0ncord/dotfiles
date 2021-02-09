@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-main() {
+function main {
     # Set proper TERM, if required
     if $(which 'infocmp' &> /dev/null) && $(which 'tic' &>/dev/null) && ! $(infocmp &>/dev/null) ; then
         case $TERM in

@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
 # Runs a command under an alarm
-doalarm() { perl -e 'alarm shift; exec @ARGV' "$@"; }
+function doalarm { perl -e 'alarm shift; exec @ARGV' "$@"; }
 
-main() {
+function main {
     # if this is a remote or nested session, quit
     if [[ -n "$SSH_CLIENT" || -n "$SSH_TTY" || "$SHLVL" != "0" ]]; then
         return

@@ -1,19 +1,19 @@
 #!/usr/bin/env bash
 
 # Helper functions
-_sed_escape() {
+function _sed_escape {
     echo "$1" | sed 's/[&\\/]/\\&/g;s/$/\\/;$s/\\$//;s/ /\\ /g'
 }
 
 # SELinux prompt
-_selinux_prompt() {
+function _selinux_prompt {
     if [[ -e /proc/$$/attr/current ]]; then
         printf "($(awk -F: '{print $3}' <<< $(tr -d '\0' </proc/$$/attr/current)))"
     fi
 }
 
 # Git prompt
-_git_prompt() {
+function _git_prompt {
     local TOPLEVEL="$(git rev-parse --show-toplevel 2>/dev/null)"
     if [[ $? && -n $TOPLEVEL && $TOPLEVEL != $HOME ]]; then
         local BRANCH="$(git branch --show-current 2>/dev/null)"
@@ -30,7 +30,7 @@ _git_prompt() {
 }
 
 # PS1 generation
-_make_PS1() {
+function _make_PS1 {
     local COLS=$(tput cols)
     if [[ $TERM != "linux" ]]; then
         local TITLE="\\[\\033]0;\\u@\\h:\\w\\007\\]"
@@ -96,7 +96,7 @@ _make_PS1() {
     fi
 }
 
-main() {
+function main {
     # Set GIT_DISCOVERY_ACROSS_FILESYSTEM to ensure git prompt works beyond filesystem boundaries
     export GIT_DISCOVERY_ACROSS_FILESYSTEM=1
 

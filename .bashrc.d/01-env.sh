@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 
-_append_to_path() {
+function _append_to_path {
     if [[ $PATH != *"$1"* ]]; then
         export PATH="$PATH:$1"
     fi
 }
 
-main() {
+function main {
     stty -ixon                                                  # Disable CTRL-S and CTRL-Q
     shopt -s autocd                                             # Allows cding into a directory by just typing its name
     set -o vi                                                   # Enable bash VI mode

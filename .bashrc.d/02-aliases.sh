@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-main() {
+function main {
     alias ls='ls -hNF --color=auto --group-directories-first'
     alias grep='grep --color=auto'
 

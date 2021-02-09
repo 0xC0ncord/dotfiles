@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-main() {
+function main {
     export EDITOR="vim"
     export VISUAL="vim"
     export TERMINAL="termite"
