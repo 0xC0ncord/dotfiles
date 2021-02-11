@@ -2,12 +2,12 @@
 
 function main {
     # Set proper TERM, if required
-    if $(which 'infocmp' &> /dev/null) && $(which 'tic' &>/dev/null) && ! $(infocmp &>/dev/null) ; then
+    if (command -v infocmp &>/dev/null) && (command -v tic &>/dev/null) && ! (infocmp &>/dev/null); then
         case $TERM in
             "xterm-termite")
 
                 # Install termite's terminfo if possible
-                if $(which 'curl' &> /dev/null) ; then
+                if command -v curl &>/dev/null; then
                     { curl -s 'https://raw.githubusercontent.com/thestinger/termite/master/termite.terminfo' -o termite.terminfo && \
                     tic -x termite.terminfo && \
                     rm termite.terminfo && \
@@ -20,7 +20,7 @@ function main {
                 fi
                 ;;
             "xterm-kitty")
-                if $(which 'curl' &> /dev/null) ; then
+                if command -v curl &>/dev/null; then
                     { curl -s 'https://github.com/kovidgoyal/kitty/raw/master/terminfo/kitty.terminfo' -o kitty.terminfo && \
                     tic -x kitty.terminfo && \
                     rm kitty.terminfo && \

@@ -8,7 +8,7 @@ function pre {
 
     # Attempt to clone and build ble.sh
     if [[ ! -d $HOME/.bashrc.d/submodules/ble.sh ]]; then
-        if [[ $(which git) ]]; then
+        if command -v git &>/dev/null; then
             {
                 echo "Installing ble.sh…"
                 git clone https://github.com/akinomyoga/ble.sh $HOME/.bashrc.d/submodules/ble.sh 2>&1 >/dev/null

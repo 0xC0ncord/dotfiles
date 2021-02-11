@@ -18,25 +18,25 @@ function main {
     alias wttr='curl wttr.in'
 
     # The below aliases require additional dependencies
-    if $(which 'highlight' &> /dev/null) ; then
-        VER="$(highlight --version | sed '1d;2q' | awk '{print $3}')"
-        if [[ "$(printf ${VER} | awk -F. '{print $1}')" -gt 3 || "$(printf ${VER} | awk -F. '{print $2}')" -ge 35 ]]; then
+    if command -v highlight &>/dev/null; then
+        VER="$(highlight --version | sed -n '/version/s/[^0-9]//gp')"
+        if [[ $VER -ge 335 ]]; then
             # --stdout option only available in 3.35 and onwards; too breaking to use without it, so don't alias if it's not available
             alias ccat='highlight --out-format=ansi --stdout --force'
             alias cat='ccat'
         fi
     fi
-    if $(which 'src-hilite-lesspipe.sh' &> /dev/null) ; then
-        export LESSOPEN="| /usr/bin/src-hilite-lesspipe.sh %s"
+    if command -v src-hilite-lesspipe.sh &>/dev/null; then
+        export LESSOPEN="|/usr/bin/src-hilite-lesspipe.sh %s"
         export LESS=' -R '
     fi
-    if $(which 'youtube-dl' &> /dev/null) ; then
+    if command -v youtube-dl &>/dev/null; then
         alias youtube-dl='youtube-dl --add-metadata -ic'
     fi
-    if $(which 'sxiv' &> /dev/null) ; then
+    if command -v sxiv &>/dev/null; then
         alias sxiv='sxiv -a'
     fi
-    if $(which 'desmume' &> /dev/null) ; then
-        alias sxiv='desmume --cpu-mode=1'
+    if command -v desmume &>/dev/null; then
+        alias desmume='desmume --cpu-mode=1'
     fi
 }

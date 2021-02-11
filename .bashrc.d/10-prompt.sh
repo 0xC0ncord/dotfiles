@@ -8,7 +8,7 @@ function _sed_escape {
 # SELinux prompt
 function _selinux_prompt {
     if [[ -e /proc/$$/attr/current ]]; then
-        printf "($(awk -F: '{print $3}' <<< $(tr -d '\0' </proc/$$/attr/current)))"
+        printf "($(cut -d: -f3 <<< $(tr -d '\0' </proc/$$/attr/current)))"
     fi
 }
 
