@@ -16,7 +16,11 @@ function _selinux_prompt {
 function _git_prompt {
     local TOPLEVEL="$(git rev-parse --show-toplevel 2>/dev/null)"
     if [[ $? && -n $TOPLEVEL && $TOPLEVEL != $HOME ]]; then
-        local BRANCH="$(git branch --show-current 2>/dev/null)"
+        if [[ $_GITVER < 2200 ]]; then
+            local BRANCH="$(git branch | sed -n '/^\*/s/\* \(.*\)/\1/p')"
+        else
+            local BRANCH="$(git branch --show-current 2>/dev/null)"
+        fi
         if [[ -z $BRANCH ]]; then
             BRANCH="[$(sed -e '/^[^*]/d;s/^\* (\?\(.*\)))\?/\1/' <<< "$(git branch 2>/dev/null)" | tr -d '\n')]"
         fi
@@ -99,6 +103,12 @@ function _make_PS1 {
 function main {
     # Set GIT_DISCOVERY_ACROSS_FILESYSTEM to ensure git prompt works beyond filesystem boundaries
     export GIT_DISCOVERY_ACROSS_FILESYSTEM=1
+
+    if command -v git &>/dev/null; then
+        export _GITVER=$(git --version | sed 's/[^0-9]//g')
+    else
+        export _GITVER=
+    fi
 
     if [[ -z ${PROMPT_COMMAND} ]]; then
         export PROMPT_COMMAND="_make_PS1"
