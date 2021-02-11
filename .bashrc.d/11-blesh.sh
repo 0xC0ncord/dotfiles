@@ -36,7 +36,7 @@ function post {
     unset BLESH_ENABLE
 
     # Attach to session
-    ((_ble_bash)) && ble-attach
+    [[ ${BLE_VERSION-} ]] && ble-attach
 
     # Options
     bleopt complete_auto_complete=
