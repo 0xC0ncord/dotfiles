@@ -17,3 +17,5 @@
 	defaultBranch = master
 [pull]
 	rebase = false
+[rebase]
+	autoSquash = false
