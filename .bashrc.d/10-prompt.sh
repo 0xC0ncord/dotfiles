@@ -22,11 +22,12 @@ function _git_prompt {
             local BRANCH="$(git branch --show-current 2>/dev/null)"
         fi
         if [[ -z $BRANCH ]]; then
-            BRANCH="[$(sed -e '/^[^*]/d;s/^\* (\?\(.*\)))\?/\1/' <<< "$(git branch 2>/dev/null)" | tr -d '\n')]"
+            local BRANCH="[$(sed -e '/^[^*]/d;s/^\* (\?\(.*\)))\?/\1/' <<< "$(git branch 2>/dev/null)" | tr -d '\n')]"
         fi
         printf "($BRANCH"
         if [[ -n "$(git status --short -uno)" ]]; then GIT_SYMBOLS="*"; fi
-        if [[ -n "$(git ls-files ${TOPLEVEL} --exclude-standard --others | sed 1q)" ]]; then GIT_SYMBOLS="${GIT_SYMBOLS}%%"; fi
+        #if [[ -n "$(git ls-files ${TOPLEVEL} --exclude-standard --others | sed 1q)" ]]; then GIT_SYMBOLS="${GIT_SYMBOLS}%%"; fi
+        if [[ -n "$(git status --porcelain 2>/dev/null | grep '^??')" ]]; then GIT_SYMBOLS="${GIT_SYMBOLS}%%"; fi
         if [[ -n "$(git stash list)" ]]; then GIT_SYMBOLS="${GIT_SYMBOLS}#"; fi
         if [[ -n "${GIT_SYMBOLS}" ]]; then printf " ${GIT_SYMBOLS}"; fi
         printf ", $(git rev-parse --short HEAD 2>/dev/null || printf 'empty'))"
@@ -51,19 +52,21 @@ function _make_PS1 {
             C[1]="\\[\\033[01;34m\\]"
             C[2]="\\[\\033[01;35m\\]"
             C[3]="\\[\\033[01;33m\\]"
-            for (i in P) {
-                if (length(P[i]) != 0) {
-                    R=R" "i""P[i]" "
+            N=0
+            for(i in P){
+                if(length(P[i])!=0){
+                    N=N+1
+                    R=R"`"i""P[i]" "
                 }
             }
             L=length(R)
-            if (COLS + 3 < L) {
-                R=substr(R,1,COLS - 1)"…"
+            if(COLS+N<L){
+                R=substr(R,1,COLS+N)"…"
             }
-            for (i in P) {
-                gsub(" "i, C[i], R)
+            for(i in P){
+                gsub("`"i,C[i],R)
             }
-            if (COLS <= L + 48 || L > COLS * 0.66) {
+            if(COLS<=L+48||L>COLS*0.66){
                 R=C[1]"╭ "R"\n"C[1]"╰╼ "
             }
             R=R""C[1]"$"
@@ -79,19 +82,21 @@ function _make_PS1 {
             C[1]="\\[\\033[01;34m\\]"
             C[2]="\\[\\033[01;35m\\]"
             C[3]="\\[\\033[01;33m\\]"
-            for (i in P) {
-                if (length(P[i]) != 0) {
+            N=0
+            for(i in P){
+                if(length(P[i])!=0){
+                    N=N+1
                     R=R"`"i""P[i]" "
                 }
             }
             L=length(R)
-            if (COLS + 3 < L) {
-                R=substr(R,1,COLS - 1)"…"
+            if(COLS+N<L){
+                R=substr(R,1,COLS+N)"…"
             }
-            for (i in P) {
-                gsub("`"i, C[i], R)
+            for(i in P){
+                gsub("`"i,C[i],R)
             }
-            if (COLS <= L + 48 || L > COLS * 0.66) {
+            if(COLS<=L+48||L>COLS*0.66){
                 R=C[1]"╭ "R"\n"C[1]"╰╼ "
             }
             R=R""C[1]"$"
