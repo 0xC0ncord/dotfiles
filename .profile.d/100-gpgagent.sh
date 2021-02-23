@@ -5,7 +5,7 @@ function doalarm { perl -e 'alarm shift; exec @ARGV' "$@"; }
 
 function main {
     # if this is a remote or nested session, quit
-    if [[ -n "$SSH_CLIENT" || -n "$SSH_TTY" || "$(basename "$(ps -p $PPID -o command=)")" =~ "^(bash|newrole|sudo)$" ]]; then
+    if [[ -n "$SSH_CLIENT" || -n "$SSH_TTY" || $(pstree -s $$ | grep sh- -o | wc -l) -gt 1 ]]; then
         return
     fi
 
