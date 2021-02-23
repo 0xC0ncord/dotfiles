@@ -16,7 +16,7 @@ function main {
     fi
 
     # test existing agent, remove info file if not working
-    doalarm 5 ssh-add -L 2>/dev/null >/dev/null || rm -f $HOME/.gpg-agent-info
+    doalarm 2 ssh-add -L &>/dev/null || rm -f $HOME/.gpg-agent-info
 
     # if no info file, start up potentially-new, working agent
     if [[ ! -e $HOME/.gpg-agent-info ]]; then
