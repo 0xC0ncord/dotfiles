@@ -188,10 +188,6 @@ set wrap
 vnoremap <silent> * :<C-u>call VisualSelection('', '')<CR>/<C-R>=@/<CR><CR>
 vnoremap <silent> # :<C-u>call VisualSelection('', '')<CR>?<C-R>=@/<CR><CR>
 
-" CTRL-C and CTRL-V copy-paste functionality
-vnoremap <C-c> "*y :let @+=@*<CR>
-map <C-v> "+P
-
 
 
 
