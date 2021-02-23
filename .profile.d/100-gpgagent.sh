@@ -22,13 +22,13 @@ function main {
     if [[ ! -e $HOME/.gpg-agent-info ]]; then
         # kill broken agent first
         kill $(pgrep -U $UID gpg-agent) 2>/dev/null
-        if which gpg-agent >/dev/null 2>&1 ; then
+        if command -v gpg-agent >/dev/null; then
             [ -z $SSH_TTY ] || export GPG_TTY=$(tty)
             gpg-agent \
                 --enable-ssh-support \
                 --daemon \
-                --pinentry-program $(which pinentry) \
-                2> /dev/null > $HOME/.gpg-agent-info
+                --pinentry-program $(command -v pinentry) \
+                2>/dev/null >$HOME/.gpg-agent-info
         fi
     fi
 
@@ -36,7 +36,7 @@ function main {
     if [[ -e $HOME/.gpg-agent-info ]]; then
         source $HOME/.gpg-agent-info
         export GPG_AGENT_INFO SSH_AUTH_SOCK SSH_AGENT_PID
-        gpg-connect-agent updatestartuptty /bye 2>&1 > /dev/null
+        gpg-connect-agent updatestartuptty /bye &>/dev/null
     fi
 
     unset doalarm
