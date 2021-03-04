@@ -26,7 +26,6 @@ function _git_prompt {
         fi
         printf "($BRANCH"
         if [[ -n "$(git status --short -uno)" ]]; then GIT_SYMBOLS="*"; fi
-        #if [[ -n "$(git ls-files ${TOPLEVEL} --exclude-standard --others | sed 1q)" ]]; then GIT_SYMBOLS="${GIT_SYMBOLS}%%"; fi
         if [[ -n "$(git status --porcelain 2>/dev/null | grep '^??')" ]]; then GIT_SYMBOLS="${GIT_SYMBOLS}%%"; fi
         if [[ -n "$(git stash list)" ]]; then GIT_SYMBOLS="${GIT_SYMBOLS}#"; fi
         if [[ -n "${GIT_SYMBOLS}" ]]; then printf " ${GIT_SYMBOLS}"; fi

@@ -5,7 +5,8 @@ function doalarm { perl -e 'alarm shift; exec @ARGV' "$@"; }
 
 function main {
     # if this is a remote or nested session, quit
-    if [[ -n "$SSH_CLIENT" || -n "$SSH_TTY" || $(pstree -s $$ | grep sh- -o | wc -l) -gt 1 ]]; then
+    if [[ -n "$SSH_CLIENT" || -n "$SSH_TTY" || $(pstree -s $$ | grep sh- -o | wc -l) -gt 2 ]]; then
+        # $() runs in another bash instance, so include it
         return
     fi
 
