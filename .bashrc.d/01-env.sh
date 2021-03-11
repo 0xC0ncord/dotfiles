@@ -12,11 +12,6 @@ function main {
     set -o vi                                                   # Enable bash VI mode
     export HISTSIZE= HISTFILESIZE=                              # Infinite history
     shopt -s histappend                                         # Append to the history, don't overwrite it
-    if [[ -z ${PROMPT_COMMAND} ]]; then                         # Append to the history immediately after every command
-        export PROMPT_COMMAND="history -a"
-    elif [[ "${PROMPT_COMMAND}" != *"history -a"* ]]; then
-        export PROMPT_COMMAND="history -a;${PROMPT_COMMAND}"
-    fi
 
     _append_to_path /usr/local/bin
     _append_to_path /usr/share/bin
@@ -43,6 +38,7 @@ function main {
     export VIMINIT=":source $XDG_CONFIG_HOME"/vim/vimrc
     export WGETRC="$XDG_CONFIG_HOME/wgetrc"
     export WINEPREFIX="$XDG_DATA_HOME"/wineprefixes/default
+    export WEECHAT_HOME="$XDG_DATA_HOME"/weechat
 
     unset _append_to_path
 }
