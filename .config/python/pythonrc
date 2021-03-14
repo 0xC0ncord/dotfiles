@@ -1,0 +1,19 @@
+#!/usr/bin/env python
+
+import os
+import readline
+
+my_history_path = os.path.join(os.environ['XDG_CONFIG_HOME'], 'python/python_history')
+
+readline_write_history_file = readline.write_history_file
+def my_write_history_file(history_path=my_history_path):
+    if history_path == os.path.join(os.path.expanduser('~'), ".python_history"):
+        history_path = my_history_path
+    readline_write_history_file(history_path)
+
+try:
+    readline.read_history_file(my_history_path)
+except IOError:
+    pass
+
+readline.write_history_file = my_write_history_file

@@ -28,6 +28,7 @@ function main {
         export XDG_RUNTIME_DIR="${XDG_RUNTIME_DIR:-$HOME/.local/run}"
     fi
 
+    export PYTHONSTARTUP="$XDG_CONFIG_HOME"/python/pythonrc
     export GTK_RC_FILES="$XDG_CONFIG_HOME"/gtk-1.0/gtkrc
     export GTK2_RC_FILES="$XDG_CONFIG_HOME"/gtk-2.0/gtkrc
     export LESSKEY="$XDG_CONFIG_HOME"/less/lesskey
