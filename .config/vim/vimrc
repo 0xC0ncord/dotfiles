@@ -440,8 +440,8 @@ autocmd FileType cpp nnoremap <F8> :w <bar> exec '!g++ '.shellescape('%').' -o '
 
 call plug#begin('~/.config/vim/plugins')
 
-" YCM requires Vim 7.4.1578+
-if v:version >= 704 && has('patch1578')
+" YCM requires ViM 8.1.2269+
+if v:version >= 801 && has('patch2269')
     function! BuildYCM(info)
       " info is a dictionary with 3 fields
       " - name:   name of the plugin
