@@ -24,7 +24,7 @@ function main {
         # kill broken agent first
         kill $(pgrep -U $UID gpg-agent) 2>/dev/null
         if command -v gpg-agent >/dev/null; then
-            [ -z $SSH_TTY ] || export GPG_TTY=$(tty)
+            [ -z $SSH_TTY ] && export GPG_TTY=$(tty)
             gpg-agent \
                 --enable-ssh-support \
                 --daemon \
