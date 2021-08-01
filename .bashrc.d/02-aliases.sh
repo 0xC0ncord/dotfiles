@@ -14,6 +14,7 @@ function main {
     alias dd='dd status=progress'
     alias assh='ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no'
     alias ascp='scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no'
+    alias rsync='rsync --progress'
     alias myextip='curl http://ipecho.net/plain && printf "\n"'
     alias wttr='curl wttr.in'
 
