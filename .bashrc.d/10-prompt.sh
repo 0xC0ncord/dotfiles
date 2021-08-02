@@ -7,7 +7,7 @@ function _sed_escape {
 
 # SELinux prompt
 function _selinux_prompt {
-    if [[ -e /proc/$$/attr/current ]]; then
+    if [[ -d /sys/fs/selinux ]] && [[ -e /proc/$$/attr/current ]]; then
         printf "($(cut -d: -f3 <<< $(tr -d '\0' </proc/$$/attr/current)))"
     fi
 }

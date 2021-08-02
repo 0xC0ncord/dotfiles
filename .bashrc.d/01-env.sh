@@ -40,6 +40,7 @@ function main {
     export WGETRC="$XDG_CONFIG_HOME/wgetrc"
     export WINEPREFIX="$XDG_DATA_HOME"/wineprefixes/default
     export WEECHAT_HOME="$XDG_DATA_HOME"/weechat
+    export TEXMFHOME="$XDG_DATA_HOME"/texmf
 
     unset _append_to_path
 }
