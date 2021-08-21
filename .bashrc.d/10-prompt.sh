@@ -42,7 +42,7 @@ function _make_PS1 {
         local TITLE=""
     fi
     if [[ $EUID -eq 0 ]]; then
-        export PS1="$TITLE$(awk -v COLS=$COLS -v HOSTNAME=$HOSTNAME -v CWD="$(dirs +0)" -v SELINUX="$(_selinux_prompt)" -v GIT="$(_git_prompt)" 'BEGIN {
+        export PS1="$TITLE$(awk -v COLS=$COLS -v HOSTNAME=$(hostname -s) -v CWD="$(dirs +0)" -v SELINUX="$(_selinux_prompt)" -v GIT="$(_git_prompt)" 'BEGIN {
             P[0]=HOSTNAME
             P[1]=CWD
             P[2]=SELINUX
@@ -72,7 +72,7 @@ function _make_PS1 {
             printf R"\\[\\033[00m\\] "
         }')"
     else
-        export PS1="$TITLE$(awk -v COLS=$COLS -v USER=$USER -v HOSTNAME=$HOSTNAME -v CWD="$(dirs +0)" -v SELINUX="$(_selinux_prompt)" -v GIT="$(_git_prompt)" 'BEGIN {
+        export PS1="$TITLE$(awk -v COLS=$COLS -v USER=$USER -v HOSTNAME=$(hostname -s) -v CWD="$(dirs +0)" -v SELINUX="$(_selinux_prompt)" -v GIT="$(_git_prompt)" 'BEGIN {
             P[0]=USER"@"HOSTNAME
             P[1]=CWD
             P[2]=SELINUX
