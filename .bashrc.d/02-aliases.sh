@@ -1,8 +1,26 @@
 #!/usr/bin/env bash
 
+which_declare="declare -f"
+which_opt="-f"
+which_shell="$(cat /proc/$$/comm)"
+
+if [ "$which_shell" = "ksh" ] || [ "$which_shell" = "mksh" ] || [ "$which_shell" = "zsh" ] ; then
+    which_declare="typeset -f"
+    which_opt=""
+fi
+
+which ()
+{
+    (alias; eval ${which_declare}) | /usr/bin/which --tty-only --read-alias --read-functions --show-tilde --show-dot "${@}"
+}
+
+export which_declare
+export ${which_opt} which
+
 function main {
     alias ls='ls -hNF --color=auto --group-directories-first'
     alias grep='grep --color=auto'
+    alias ip='ip -c'
 
     alias ll='ls -l'
     alias la='ls -a'
