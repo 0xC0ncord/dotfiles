@@ -17,6 +17,13 @@ which ()
 export which_declare
 export ${which_opt} which
 
+exile ()
+{
+    [[ -n "$@" ]] && ("$@" >/dev/null 2>&1 & disown)
+}
+
+export -f exile
+
 function main {
     alias ls='ls -hNF --color=auto --group-directories-first'
     alias grep='grep --color=auto'
