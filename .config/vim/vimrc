@@ -276,6 +276,7 @@ endif
 autocmd FileType cpp nnoremap <buffer> <F8> :w <bar> !g++ -o %:r % && ./%:r<CR>
 autocmd FileType c nnoremap <buffer> <F8> :w <bar> !gcc -o %:r % && ./%:r<CR>
 autocmd FileType python nnoremap <buffer> <F8> :w <bar> !python %<CR>
+autocmd FileType tex nnoremap <buffer> <F8> :w <bar> !make<CR>
 
 " IDE-like mappings
 "inoremap <Tab><Space> <Esc>/<++><Enter>"_c4l
