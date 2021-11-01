@@ -24,3 +24,9 @@
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
 	required = true
+[sendemail]
+	smtpencryption = tls
+	smtpserver = smtp.concord.sh
+	smtpuser = me@concord.sh
+	smtpserverport = 587
+	suppresscc = self
