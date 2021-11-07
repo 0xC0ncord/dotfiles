@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
 # Helper functions
-function _sed_escape {
-    echo "$1" | sed 's/[&\\/]/\\&/g;s/$/\\/;$s/\\$//;s/ /\\ /g'
-}
+#function _sed_escape {
+#    echo "$1" | sed 's/[&\\/]/\\&/g;s/$/\\/;$s/\\$//;s/ /\\ /g'
+#}
 
 # SELinux prompt
 function _selinux_prompt {
