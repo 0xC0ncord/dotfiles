@@ -36,72 +36,76 @@ function _git_prompt {
 # PS1 generation
 function _make_PS1 {
     local COLS=$(tput cols)
+    local D=$'\u200b'
+    local ND=2
+    local WRAP=0
+    local ELLIPSE=0
+    # Do not add title on TTYs
     if [[ $TERM != "linux" ]]; then
-        local TITLE="\\[\\033]0;\\u@\\h:\\w\\007\\]"
-    else
-        local TITLE=""
+        # Title is added last and does not affect the prompt in any way
+        local TITLE="\[\033]0;\u@\h:\w\007\]"
     fi
+
+    # Set up fields and colors
     if [[ $EUID -eq 0 ]]; then
-        export PS1="$TITLE$(awk -v COLS=$COLS -v HOSTNAME=$(hostname -s) -v CWD="$(dirs +0)" -v SELINUX="$(_selinux_prompt)" -v GIT="$(_git_prompt)" 'BEGIN {
-            P[0]=HOSTNAME
-            P[1]=CWD
-            P[2]=SELINUX
-            P[3]=GIT
-            C[0]="\\[\\033[01;31m\\]"
-            C[1]="\\[\\033[01;34m\\]"
-            C[2]="\\[\\033[01;35m\\]"
-            C[3]="\\[\\033[01;33m\\]"
-            N=0
-            for(i in P){
-                if(length(P[i])!=0){
-                    N=N+1
-                    R=R"`"i""P[i]" "
-                }
-            }
-            L=length(R)
-            if(COLS+N<L){
-                R=substr(R,1,COLS+N)"…"
-            }
-            for(i in P){
-                gsub("`"i,C[i],R)
-            }
-            if(COLS<=L+48||L>COLS*0.66){
-                R=C[1]"╭ "R"\n"C[1]"╰╼ "
-            }
-            R=R""C[1]"$"
-            printf R"\\[\\033[00m\\] "
-        }')"
+        local C0="\033[01;31m"
+        local HOST="\h"
     else
-        export PS1="$TITLE$(awk -v COLS=$COLS -v USER=$USER -v HOSTNAME=$(hostname -s) -v CWD="$(dirs +0)" -v SELINUX="$(_selinux_prompt)" -v GIT="$(_git_prompt)" 'BEGIN {
-            P[0]=USER"@"HOSTNAME
-            P[1]=CWD
-            P[2]=SELINUX
-            P[3]=GIT
-            C[0]="\\[\\033[01;32m\\]"
-            C[1]="\\[\\033[01;34m\\]"
-            C[2]="\\[\\033[01;35m\\]"
-            C[3]="\\[\\033[01;33m\\]"
-            N=0
-            for(i in P){
-                if(length(P[i])!=0){
-                    N=N+1
-                    R=R"`"i""P[i]" "
-                }
-            }
-            L=length(R)
-            if(COLS+N<L){
-                R=substr(R,1,COLS+N)"…"
-            }
-            for(i in P){
-                gsub("`"i,C[i],R)
-            }
-            if(COLS<=L+48||L>COLS*0.66){
-                R=C[1]"╭ "R"\n"C[1]"╰╼ "
-            }
-            R=R""C[1]"$"
-            printf R"\\[\\033[00m\\] "
-        }')"
+        local C0="\033[01;32m"
+        local HOST="\u@\h"
     fi
+    local C1="\033[01;34m"
+    local C2="\033[01;35m"
+    local C3="\033[01;33m"
+    local DIR="\w"
+    local SELINUX="$(_selinux_prompt)"
+    local GIT="$(_git_prompt)"
+
+    # Render fields
+    HOST="${HOST@P}"
+    DIR="${DIR@P}"
+
+    # Join the prompt together
+    PS1="${D}0${HOST} ${D}1${DIR}"
+    [[ -n "${SELINUX}" ]] && PS1="${PS1} ${D}2${SELINUX}" && ND=$((ND+1))
+    [[ -n "${GIT}" ]] && PS1="${PS1} ${D}3${GIT}" && ND=$((ND+1))
+
+    # Get prompt length
+    local N_PS1=$((${#PS1} - (${ND} * 2)))
+
+    # See if we need to wrap typing to the second line
+    if [[ $((N_PS1 + 48)) -gt ${COLS} ]] || [[ ${N_PS1} -gt $((COLS / 3 * 2)) ]]; then
+        WRAP=1
+        ND=$((ND+1))
+        N_PS1=$((N_PS1+4))
+        PS1="${D}1╭ ${PS1}"
+        # Test if the prompt should be ellipsized
+        if [[ ${N_PS1} -gt ${COLS} ]]; then
+            # 2 characters per delimeter
+            local IN=$((COLS + (ND * 2) - 1))
+            # Trim prompt
+            PS1="${PS1:0:$IN}"
+            # Test if some delimeters were removed and adjust
+            local N="${PS1//[^${D}]}"
+            N="${#N}"
+            PS1="${PS1:0:$((IN - (ND - N) * 2))}"
+            # Trim ending delimeter if it exists
+            [[ ${PS1} == "*${D}" ]] && PS1="${PS1::-1}"
+            # Add elipsis
+            PS1="${PS1}…"
+        fi
+        PS1="${PS1}\n${D}1╰╼ \$\033[00m "
+    else
+        PS1="${PS1} ${D}1\$\033[00m "
+    fi
+
+    # Replace delimiters with colors
+    PS1="${PS1//${D}0/${C0}}"
+    PS1="${PS1//${D}1/${C1}}"
+    PS1="${PS1//${D}2/${C2}}"
+    PS1="${PS1//${D}3/${C3}}"
+    # Render and add title
+    export PS1="${TITLE}${PS1@P}"
 }
 
 function main {
