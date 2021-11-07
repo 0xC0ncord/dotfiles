@@ -115,6 +115,9 @@ if has("gui_macvim")
     autocmd GUIEnter * set vb t_vb=
 endif
 
+" Enable color column when text width is set
+set cc=+0
+
 
 
 
