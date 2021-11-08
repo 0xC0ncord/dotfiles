@@ -38,8 +38,6 @@ function _make_PS1 {
     local COLS=$(tput cols)
     local D=$'\u200b'
     local ND=2
-    local WRAP=0
-    local ELLIPSE=0
     # Do not add title on TTYs
     if [[ $TERM != "linux" ]]; then
         # Title is added last and does not affect the prompt in any way
@@ -75,7 +73,6 @@ function _make_PS1 {
 
     # See if we need to wrap typing to the second line
     if [[ $((N_PS1 + 48)) -gt ${COLS} ]] || [[ ${N_PS1} -gt $((COLS / 3 * 2)) ]]; then
-        WRAP=1
         ND=$((ND+1))
         N_PS1=$((N_PS1+4))
         PS1="${D}1╭ ${PS1}"
