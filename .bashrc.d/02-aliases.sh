@@ -3,17 +3,14 @@
 which_declare="declare -f"
 which_opt="-f"
 which_shell="$(cat /proc/$$/comm)"
-
 if [ "$which_shell" = "ksh" ] || [ "$which_shell" = "mksh" ] || [ "$which_shell" = "zsh" ] ; then
     which_declare="typeset -f"
     which_opt=""
 fi
-
 which ()
 {
     (alias; eval ${which_declare}) | /usr/bin/which --tty-only --read-alias --read-functions --show-tilde --show-dot "${@}"
 }
-
 export which_declare
 export ${which_opt} which
 
@@ -21,8 +18,13 @@ exile ()
 {
     [[ -n "$@" ]] && ("$@" >/dev/null 2>&1 & disown)
 }
-
 export -f exile
+
+showcert ()
+{
+  dig $1
+  (openssl s_client -showcerts -servername $1 -connect $1:$2 <<< "Q" | openssl x509 -text )
+}
 
 function main {
     alias ls='ls -hNF --color=auto --group-directories-first'
