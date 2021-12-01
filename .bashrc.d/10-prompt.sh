@@ -24,11 +24,12 @@ function _git_prompt {
         if [[ -z $BRANCH ]]; then
             local BRANCH="[$(sed -e '/^[^*]/d;s/^\* (\?\(.*\)))\?/\1/' <<< "$(git branch 2>/dev/null)" | tr -d '\n')]"
         fi
+        local STATUS="$(git status --porcelain)"
         printf "($BRANCH"
-        if [[ -n "$(git status --short -uno)" ]]; then GIT_SYMBOLS="*"; fi
-        if [[ -n "$(git status --porcelain 2>/dev/null | grep '^??')" ]]; then GIT_SYMBOLS="${GIT_SYMBOLS}%%"; fi
-        if [[ -n "$(git stash list)" ]]; then GIT_SYMBOLS="${GIT_SYMBOLS}#"; fi
-        if [[ -n "${GIT_SYMBOLS}" ]]; then printf " ${GIT_SYMBOLS}"; fi
+        grep '^M' &>/dev/null <<< "$STATUS" && GIT_SYMBOLS="*"
+        grep '^??' &>/dev/null <<< "$STATUS" && GIT_SYMBOLS="${GIT_SYMBOLS}%%"
+        git rev-list --walk-reflogs --count refs/stash &>/dev/null && GIT_SYMBOLS="${GIT_SYMBOLS}#"
+        [[ -n "${GIT_SYMBOLS}" ]] && printf " ${GIT_SYMBOLS}"
         printf ", $(git rev-parse --short HEAD 2>/dev/null || printf 'empty'))"
     fi
 }
