@@ -26,7 +26,7 @@ function _git_prompt {
         fi
         local STATUS="$(git status --porcelain)"
         printf "($BRANCH"
-        grep '^ \?M' &>/dev/null <<< "$STATUS" && GIT_SYMBOLS="*"
+        grep '^ \?[MD]' &>/dev/null <<< "$STATUS" && GIT_SYMBOLS="*"
         grep '^??' &>/dev/null <<< "$STATUS" && GIT_SYMBOLS="${GIT_SYMBOLS}%%"
         git rev-list --walk-reflogs --count refs/stash &>/dev/null && GIT_SYMBOLS="${GIT_SYMBOLS}#"
         [[ -n "${GIT_SYMBOLS}" ]] && printf " ${GIT_SYMBOLS}"
