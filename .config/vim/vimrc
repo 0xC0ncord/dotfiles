@@ -482,4 +482,6 @@ let g:NERDCommentEmptyLines = 1
 let g:NERDTrimTrailingWhitespace = 1
 let g:NERDToggleCheckAllLines = 1
 
+Plug 'garyttierney/vim-secil'
+
 call plug#end()
