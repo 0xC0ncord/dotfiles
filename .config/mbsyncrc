@@ -1,0 +1,47 @@
+IMAPStore me@concord.sh-remote
+Host imap.concord.sh
+Port 993
+User me@concord.sh
+PassCmd "pass me@concord.sh"
+AuthMechs LOGIN
+SSLType IMAPS
+CertificateFile /etc/ssl/certs/ca-certificates.crt
+
+MaildirStore me@concord.sh-local
+Subfolders Verbatim
+Path /home/shizune/.local/share/mail/me@concord.sh/
+Inbox /home/shizune/.local/share/mail/me@concord.sh/INBOX
+
+Channel me@concord.sh
+Far :me@concord.sh-remote:
+Near :me@concord.sh-local:
+Patterns * !"[Gmail]/All Mail"
+Expunge Both
+Create Both
+SyncState *
+MaxMessages 0
+ExpireUnread no
+
+IMAPStore concord@fuwafuwatime.moe-remote
+Host imap.fuwafuwatime.moe
+Port 993
+User concord@fuwafuwatime.moe
+PassCmd "pass concord@fuwafuwatime.moe"
+AuthMechs LOGIN
+SSLType IMAPS
+CertificateFile /etc/ssl/certs/ca-certificates.crt
+
+MaildirStore concord@fuwafuwatime.moe-local
+Subfolders Verbatim
+Path /home/shizune/.local/share/mail/concord@fuwafuwatime.moe/
+Inbox /home/shizune/.local/share/mail/concord@fuwafuwatime.moe/INBOX
+
+Channel concord@fuwafuwatime.moe
+Far :concord@fuwafuwatime.moe-remote:
+Near :concord@fuwafuwatime.moe-local:
+Patterns * !"[Gmail]/All Mail"
+Expunge Both
+Create Both
+SyncState *
+MaxMessages 0
+ExpireUnread no
