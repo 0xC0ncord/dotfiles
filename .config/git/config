@@ -1,7 +1,7 @@
 [user]
-	name = 0xC0ncord
-	email = me@concord.sh
-	signingkey = E6442094CEDEE36E7E01CD0D9BD9716CBD788521
+    name = 0xC0ncord
+    email = me@concord.sh
+    signingkey = E6442094CEDEE36E7E01CD0D9BD9716CBD788521
 [core]
     editor = vim
 [color]
@@ -14,19 +14,19 @@
     lg = !"git lg1"
     track = "!f(){ git branch -r | grep -v '\\->' | while read remote; do git branch --track \"${remote#origin/}\" \"$remote\" 2>/dev/null; done; git fetch --all; git pull --all; }; f"
 [init]
-	defaultBranch = master
+    defaultBranch = master
 [pull]
-	rebase = false
+    rebase = false
 [rebase]
-	autoSquash = false
+    autoSquash = false
 [filter "lfs"]
-	clean = git-lfs clean -- %f
-	smudge = git-lfs smudge -- %f
-	process = git-lfs filter-process
-	required = true
+    clean = git-lfs clean -- %f
+    smudge = git-lfs smudge -- %f
+    process = git-lfs filter-process
+    required = true
 [sendemail]
-	smtpencryption = tls
-	smtpserver = smtp.concord.sh
-	smtpuser = me@concord.sh
-	smtpserverport = 587
-	suppresscc = self
+    smtpencryption = tls
+    smtpserver = smtp.concord.sh
+    smtpuser = me@concord.sh
+    smtpserverport = 587
+    suppresscc = self
