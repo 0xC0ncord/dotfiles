@@ -45,3 +45,27 @@ Create Both
 SyncState *
 MaxMessages 0
 ExpireUnread no
+
+IMAPStore tonytheslayer@gmail.com-remote
+Host imap.gmail.com
+Port 993
+User tonytheslayer@gmail.com
+PassCmd "pass mutt-wizard-gmail"
+AuthMechs LOGIN
+SSLType IMAPS
+CertificateFile /etc/ssl/certs/ca-certificates.crt
+
+MaildirStore tonytheslayer@gmail.com-local
+Subfolders Verbatim
+Path /home/shizune/.local/share/mail/tonytheslayer@gmail.com/
+Inbox /home/shizune/.local/share/mail/tonytheslayer@gmail.com/INBOX
+
+Channel tonytheslayer@gmail.com
+Far :tonytheslayer@gmail.com-remote:
+Near :tonytheslayer@gmail.com-local:
+Patterns * !"[Gmail]/All Mail"
+Expunge Both
+Create Both
+SyncState *
+MaxMessages 0
+ExpireUnread no
