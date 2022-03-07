@@ -1,31 +1,26 @@
 # vim: filetype=neomuttrc
-# muttrc file for account gmail
 set realname = "0xC0ncord"
 set from = "tonytheslayer@gmail.com"
 set sendmail = "msmtp -a gmail"
 alias me 0xC0ncord <tonytheslayer@gmail.com>
-set folder = "/home/shizune/.local/share/mail/tonytheslayer@gmail.com"
-set header_cache = /home/shizune/.cache/mutt-wizard/tonytheslayer@gmail.com/headers
-set message_cachedir = /home/shizune/.cache/mutt-wizard/tonytheslayer@gmail.com/bodies
+set folder = $HOME/.local/share/mail/tonytheslayer@gmail.com
+set header_cache = $HOME/.cache/mutt/tonytheslayer@gmail.com/headers
+set message_cachedir = $HOME/.cache/mutt/tonytheslayer@gmail.com/bodies
 set mbox_type = Maildir
 
 set crypt_autosign = no
 set crypt_opportunistic_encrypt = no
 set pgp_self_encrypt = no
-set pgp_default_key  =
+set pgp_default_key =
 
-bind index,pager gg noop
-bind index,pager g noop
-bind index,pager M noop
+bind index M noop
 bind index,pager C noop
-bind index gg first-entry
-macro index o "<shell-escape>mbsync -V tonytheslayer@gmail.com<enter>" "run mbsync to sync gmail"
 unmailboxes *
+unalternates *
+unset signature
+unmacro index o
+macro index o "<shell-escape>$HOME/.config/mutt/scripts/mailsync tonytheslayer@gmail.com<enter>" "sync mailboxes for tonytheslayer@gmail.com"
 
-set spoolfile = "+INBOX"
-set record = "+Sent"
-set postponed = "+Drafts"
-set trash = "+[Gmail].Trash"
 mailboxes "=INBOX" "=Orders" "=Promotions" "=[Gmail].Important" "=[Gmail].Starred" "=[Gmail].Drafts" "=Archived" "=[Gmail].Sent Mail" "=[Gmail].Spam" "=[Gmail].Trash" "=Queue"
 macro index,pager gi "<change-folder>=INBOX<enter>" "go to inbox"
 macro index,pager Mi ";<save-message>=INBOX<enter>" "move mail to inbox"
@@ -45,3 +40,7 @@ macro index,pager CS ";<copy-message>=[Gmail].Spam<enter>" "copy mail to spam"
 macro index,pager ga "<change-folder>=Archived<enter>" "go to archive"
 macro index,pager Ma ";<save-message>=Archived<enter>" "move mail to archive"
 macro index,pager Ca ";<copy-message>=Archived<enter>" "copy mail to archive"
+set spoolfile = "+INBOX"
+set record = "+Sent"
+set postponed = "+Drafts"
+set trash = "+[Gmail].Trash"

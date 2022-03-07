@@ -1,19 +1,15 @@
 # vim: filetype=neomuttrc
-# muttrc file for account concord@fuwafuwatime.moe
 set realname = "Kenton Groombridge"
 set from = "concord@fuwafuwatime.moe"
 set sendmail = "msmtp -a concord@fuwafuwatime.moe"
 alias me Kenton Groombridge <concord@fuwafuwatime.moe>
-set folder = "/home/shizune/.local/share/mail/concord@fuwafuwatime.moe"
-set header_cache = /home/shizune/.cache/mutt/concord@fuwafuwatime.moe/headers
-set message_cachedir = /home/shizune/.cache/mutt/concord@fuwafuwatime.moe/bodies
+set folder = $HOME/.local/share/mail/concord@fuwafuwatime.moe
+set header_cache = $HOME/.cache/mutt/concord@fuwafuwatime.moe/headers
+set message_cachedir = $HOME/.cache/mutt/concord@fuwafuwatime.moe/bodies
 set mbox_type = Maildir
 
-bind index,pager gg noop
-bind index,pager g noop
-bind index,pager M noop
+bind index M noop
 bind index,pager C noop
-bind index gg first-entry
 unmailboxes *
 unalternates *
 unset signature

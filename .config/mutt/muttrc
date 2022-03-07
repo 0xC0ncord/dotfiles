@@ -3,23 +3,24 @@ set mailcap_path = $HOME//mailcap:$mailcap_path
 set mime_type_query_command = "file --mime-type -b %s"
 set date_format="%y/%m/%d %I:%M%p"
 set index_format="%2C %Z %?X?A& ? %D %-15.15F %s (%-4.4c)"
-set sort = 'reverse-date'
+set sort = 'threads'
+set sort_aux = 'reverse-last-date-received'
 set smtp_authenticators = 'gssapi:login'
 set query_command = "abook --mutt-query '%s'"
 set rfc2047_parameters = yes
-set sleep_time = 0		# Pause 0 seconds for informational messages
-set markers = no		# Disables the `+` displayed at line wraps
-set mark_old = no		# Unread mail stay unread until read
-set mime_forward = yes	# attachments are forwarded with mail
-set wait_key = no		# mutt won't ask "press key to continue"
-set fast_reply			# skip to compose when replying
-set fcc_attach			# save attachments with the body
+set sleep_time = 0		        # Pause 0 seconds for informational messages
+set markers = no		        # Disables the `+` displayed at line wraps
+set mark_old = no		        # Unread mail stay unread until read
+set mime_forward = yes	        # attachments are forwarded with mail
+set wait_key = no		        # mutt won't ask "press key to continue"
+set fast_reply			        # skip to compose when replying
+set fcc_attach			        # save attachments with the body
 set forward_format = "Fwd: %s"	# format of subject when forwarding
-set forward_quote		# include message in forwards
-set reverse_name		# reply as whomever it was to
-set include			# include message in replies
-set mail_check=60 # to avoid lags using IMAP with some email providers (yahoo for example)
-auto_view text/html		# automatically show html (mailcap uses lynx)
+set forward_quote		        # include message in forwards
+set reverse_name		        # reply as whomever it was to
+set include			            # include message in replies
+set mail_check=60               # to avoid lags using IMAP with some email providers (yahoo for example)
+auto_view text/html		        # automatically show html (mailcap uses lynx)
 auto_view application/pgp-encrypted
 #set display_filter = "tac | sed '/\\\[-- Autoview/,+1d' | tac" # Suppress autoview messages.
 alternative_order text/plain text/enriched text/html
@@ -33,8 +34,8 @@ bind index k previous-entry
 bind attach <return> view-mailcap
 bind attach l view-mailcap
 bind editor <space> noop
-bind index G last-entry
 bind index gg first-entry
+bind index G last-entry
 bind pager,attach h exit
 bind pager j next-line
 bind pager k previous-line
@@ -45,12 +46,15 @@ bind index L limit
 bind index h noop
 bind index l display-message
 bind index,query <space> tag-entry
+bind index <space> collapse-thread
 #bind browser h goto-parent
 macro browser h '<change-dir><kill-line>..<enter>' "Go to parent folder"
 bind index,pager H view-raw-message
 bind browser l select-entry
-bind pager,browser gg top-page
-bind pager,browser G bottom-page
+bind pager gg top
+bind pager G bottom
+bind browser gg top-page
+bind browser G bottom-page
 bind index,pager,browser d half-down
 bind index,pager,browser u half-up
 bind index,pager S sync-mailbox
@@ -58,7 +62,7 @@ bind index,pager R group-reply
 bind index \031 previous-undeleted	# Mouse wheel
 bind index \005 next-undeleted		# Mouse wheel
 bind pager \031 previous-line		# Mouse wheel
-bind pager \005 next-line		# Mouse wheel
+bind pager \005 next-line		    # Mouse wheel
 bind editor <Tab> complete-query
 
 set crypt_autosign = yes
@@ -159,7 +163,7 @@ mono body bold "^gpg: BAD signature from.*"
 color body red default "([a-z][a-z0-9+-]*://(((([a-z0-9_.!~*'();:&=+$,-]|%[0-9a-f][0-9a-f])*@)?((([a-z0-9]([a-z0-9-]*[a-z0-9])?)\\.)*([a-z]([a-z0-9-]*[a-z0-9])?)\\.?|[0-9]+\\.[0-9]+\\.[0-9]+\\.[0-9]+)(:[0-9]+)?)|([a-z0-9_.!~*'()$,;:@&=+-]|%[0-9a-f][0-9a-f])+)(/([a-z0-9_.!~*'():@&=+$,-]|%[0-9a-f][0-9a-f])*(;([a-z0-9_.!~*'():@&=+$,-]|%[0-9a-f][0-9a-f])*)*(/([a-z0-9_.!~*'():@&=+$,-]|%[0-9a-f][0-9a-f])*(;([a-z0-9_.!~*'():@&=+$,-]|%[0-9a-f][0-9a-f])*)*)*)?(\\?([a-z0-9_.!~*'();/?:@&=+$,-]|%[0-9a-f][0-9a-f])*)?(#([a-z0-9_.!~*'();/?:@&=+$,-]|%[0-9a-f][0-9a-f])*)?|(www|ftp)\\.(([a-z0-9]([a-z0-9-]*[a-z0-9])?)\\.)*([a-z]([a-z0-9-]*[a-z0-9])?)\\.?(:[0-9]+)?(/([-a-z0-9_.!~*'():@&=+$,]|%[0-9a-f][0-9a-f])*(;([-a-z0-9_.!~*'():@&=+$,]|%[0-9a-f][0-9a-f])*)*(/([-a-z0-9_.!~*'():@&=+$,]|%[0-9a-f][0-9a-f])*(;([-a-z0-9_.!~*'():@&=+$,]|%[0-9a-f][0-9a-f])*)*)*)?(\\?([-a-z0-9_.!~*'();/?:@&=+$,]|%[0-9a-f][0-9a-f])*)?(#([-a-z0-9_.!~*'();/?:@&=+$,]|%[0-9a-f][0-9a-f])*)?)[^].,:;!)? \t\r\n<>\"]"
 
 bind index,pager \Cr recall-message
-source /home/shizune/.config/mutt/accounts/1-me@concord.sh.muttrc
-macro index,pager i1 '<sync-mailbox><enter-command>source /home/shizune/.config/mutt/accounts/1-me@concord.sh.muttrc<enter><change-folder>!<enter>;<check-stats>' "switch to me@concord.sh"
-macro index,pager i2 '<sync-mailbox><enter-command>source /home/shizune/.config/mutt/accounts/2-concord@fuwafuwatime.moe.muttrc<enter><change-folder>!<enter>;<check-stats>' "switch to concord@fuwafuwatime.moe"
-macro index,pager i3 '<sync-mailbox><enter-command>source /home/shizune/.config/mutt/accounts/3-tonytheslayer@gmail.com.muttrc<enter><change-folder>!<enter>;<check-stats>' "switch to tonytheslayer@gmail.com"
+source $HOME/.config/mutt/accounts/1-me@concord.sh.muttrc
+macro index,pager i1 '<sync-mailbox><enter-command>source $HOME/.config/mutt/accounts/1-me@concord.sh.muttrc<enter><change-folder>!<enter>;<check-stats>' "switch to me@concord.sh"
+macro index,pager i2 '<sync-mailbox><enter-command>source $HOME/.config/mutt/accounts/2-concord@fuwafuwatime.moe.muttrc<enter><change-folder>!<enter>;<check-stats>' "switch to concord@fuwafuwatime.moe"
+macro index,pager i3 '<sync-mailbox><enter-command>source $HOME/.config/mutt/accounts/3-tonytheslayer@gmail.com.muttrc<enter><change-folder>!<enter>;<check-stats>' "switch to tonytheslayer@gmail.com"
