@@ -1,7 +1,7 @@
 [user]
     name = 0xC0ncord
     email = me@concord.sh
-    signingkey = E6442094CEDEE36E7E01CD0D9BD9716CBD788521
+    signingkey = 6EBF9A4CDF86911DFD2C06F40A25D52E6BE89221
 [core]
     editor = vim
 [color]
