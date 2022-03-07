@@ -1,0 +1,26 @@
+defaults
+auth on
+tls	on
+tls_trust_file	/etc/ssl/certs/ca-certificates.crt
+logfile	~/.config/msmtp/msmtp.log
+
+account me@concord.sh
+host smtp.concord.sh
+port 587
+from me@concord.sh
+user me@concord.sh
+passwordeval "pass mutt-wizard-concord"
+
+account concord@fuwafuwatime
+host smtp.fuwafuwatime.moe
+port 587
+from concord@fuwafuwatime.moe
+user concord@fuwafuwatime.moe
+passwordeval "pass mutt-wizard-fuwafuwatime"
+
+account tonytheslayer@gmail.com
+host smtp.gmail.com
+port 587
+from tonytheslayer@gmail.com
+user tonytheslayer@gmail.com
+passwordeval "pass mutt-wizard-gmail"
