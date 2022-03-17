@@ -11,7 +11,7 @@ from me@concord.sh
 user me@concord.sh
 passwordeval "pass mutt-wizard-concord"
 
-account concord@fuwafuwatime
+account concord@fuwafuwatime.moe
 host smtp.fuwafuwatime.moe
 port 587
 from concord@fuwafuwatime.moe
