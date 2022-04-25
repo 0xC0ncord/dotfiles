@@ -25,9 +25,9 @@ function main {
     export XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
     if [[ -z "$XDG_RUNTIME_DIR" ]]; then
         if [[ -d /run/user/$UID ]]; then
-            export XDG_RUNTIME_DIR="${XDG_RUNTIME_DIR:-/run/user/$UID}"
+            export XDG_RUNTIME_DIR="/run/user/$UID"
         else
-            export XDG_RUNTIME_DIR="${XDG_RUNTIME_DIR:-$HOME/.local/run}"
+            export XDG_RUNTIME_DIR="$HOME/.local/run"
         fi
     fi
     export XDG_DESKTOP_DIR="${XDG_DESKTOP_DIR:-$HOME/Desktop}"
