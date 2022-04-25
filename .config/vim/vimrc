@@ -484,4 +484,6 @@ let g:NERDToggleCheckAllLines = 1
 
 Plug 'garyttierney/vim-secil'
 
+Plug 'tpope/vim-surround'
+
 call plug#end()
