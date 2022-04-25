@@ -7,10 +7,11 @@ function _append_to_path {
 }
 
 function main {
-    stty -ixon                                                  # Disable CTRL-S and CTRL-Q
-    shopt -s autocd                                             # Allows cding into a directory by just typing its name
-    set -o vi                                                   # Enable bash VI mode
-    export HISTSIZE= HISTFILESIZE=                              # Infinite history
+    stty -ixon                          # Disable CTRL-S and CTRL-Q
+    shopt -s autocd                     # Allows cding into a directory by just typing its name
+    set -o vi                           # Enable bash VI mode
+    export HISTSIZE= HISTFILESIZE=      # Infinite history
+    export HISTCONTROL=ignoreboth       # Ignore history when prepended with whitespace
 
     _append_to_path /usr/local/bin
     _append_to_path /usr/share/bin
