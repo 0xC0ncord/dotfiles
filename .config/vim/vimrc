@@ -276,8 +276,8 @@ endif
 
 " Map F8 to save the current file, and invoke a compiler or interpreter to
 " build and/or execute the program
-autocmd FileType cpp nnoremap <buffer> <F8> :w <bar> !g++ -o %:r % && ./%:r<CR>
-autocmd FileType c nnoremap <buffer> <F8> :w <bar> !gcc -o %:r % && ./%:r<CR>
+autocmd FileType cpp nnoremap <buffer> <F8> :w <bar> !clang++ -o %:r % && ./%:r<CR>
+autocmd FileType c nnoremap <buffer> <F8> :w <bar> !clang -o %:r % && ./%:r<CR>
 autocmd FileType python nnoremap <buffer> <F8> :w <bar> !python %<CR>
 autocmd FileType tex nnoremap <buffer> <F8> :w <bar> !make %:r<CR>
 
