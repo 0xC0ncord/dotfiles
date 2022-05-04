@@ -437,6 +437,7 @@ autocmd FileType c,cpp,java,php,ruby,python,uc autocmd BufWritePre <buffer> :cal
 autocmd FileType j2,xml,yaml set shiftwidth=2 tabstop=2
 
 autocmd BufNewFile,BufRead *.te,*.fc,*.if,*.cil set noexpandtab
+autocmd BufNewFile,BufRead *.md set tw=80
 
 autocmd FileType py nnoremap <F8> :w <bar> exec '!python ./'.shellescape('%')<CR>
 autocmd FileType c nnoremap <F8> :w <bar> exec '!gcc '.shellescape('%').' -o '.shellescape('%:r').' && ./'.shellescape('%:r')<CR>
