@@ -5,6 +5,8 @@ set date_format="%y/%m/%d %I:%M%p"
 set index_format="%2C %Z %?X?A& ? %D %-15.15F %s (%-4.4c)"
 set sort = 'threads'
 set sort_aux = 'reverse-last-date-received'
+set charset = 'utf-8'
+set send_charset = 'us-ascii:utf-8'
 set smtp_authenticators = 'gssapi:login'
 set query_command = "abook --mutt-query '%s'"
 set rfc2047_parameters = yes
@@ -19,7 +21,10 @@ set forward_format = "Fwd: %s"	# format of subject when forwarding
 set forward_quote		        # include message in forwards
 set reverse_name		        # reply as whomever it was to
 set include			            # include message in replies
-set mail_check=60               # to avoid lags using IMAP with some email providers (yahoo for example)
+set mail_check = 60             # to avoid lags using IMAP with some email providers (yahoo for example)
+set editor = `echo \$EDITOR`    # properly set EDITOR
+unset use_domain
+set use_from = yes
 auto_view text/html		        # automatically show html (mailcap uses lynx)
 auto_view application/pgp-encrypted
 #set display_filter = "tac | sed '/\\\[-- Autoview/,+1d' | tac" # Suppress autoview messages.
@@ -168,3 +173,18 @@ source $HOME/.config/mutt/accounts/1-me@concord.sh.muttrc
 macro index,pager i1 '<sync-mailbox><enter-command>source $HOME/.config/mutt/accounts/1-me@concord.sh.muttrc<enter><change-folder>!<enter>;<check-stats>' "switch to me@concord.sh"
 macro index,pager i2 '<sync-mailbox><enter-command>source $HOME/.config/mutt/accounts/2-concord@fuwafuwatime.moe.muttrc<enter><change-folder>!<enter>;<check-stats>' "switch to concord@fuwafuwatime.moe"
 macro index,pager i3 '<sync-mailbox><enter-command>source $HOME/.config/mutt/accounts/3-tonytheslayer@gmail.com.muttrc<enter><change-folder>!<enter>;<check-stats>' "switch to tonytheslayer@gmail.com"
+
+# Mailing lists
+set reply_to = 'ask-yes'
+lists .+@vger\\.kernel\\.org
+lists .+@lists\\.openwall\\.com
+lists gentoo-.*@gentoo\\.org
+subscribe linux-hardening@vger.kernel.org
+subscribe linux-security-module@vger.kernel.org
+subscribe selinux@vger.kernel.org
+subscribe selinux-refpolicy@vger.kernel.org
+subscribe oss-security@lists.openwall.com
+subscribe gentoo-dev@gentoo.org
+subscribe gentoo-dev-announce@gentoo.org
+subscribe gentoo-hardened@gentoo.org
+subscribe gentoo-security@gentoo.org
