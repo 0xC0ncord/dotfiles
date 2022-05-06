@@ -16,7 +16,7 @@
 [init]
 	defaultBranch = master
 [pull]
-	rebase = merge
+	rebase = false
 	ff = only
 [rebase]
 	autoSquash = false
