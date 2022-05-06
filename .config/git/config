@@ -1,32 +1,36 @@
 [user]
-    name = 0xC0ncord
-    email = me@concord.sh
-    signingkey = 6EBF9A4CDF86911DFD2C06F40A25D52E6BE89221
+	name = 0xC0ncord
+	email = me@concord.sh
+	signingkey = 6EBF9A4CDF86911DFD2C06F40A25D52E6BE89221
 [core]
-    editor = vim
+	editor = vim
 [color]
-    ui = auto
+	ui = auto
 [commit]
-    gpgsign = false
+	gpgsign = false
 [alias]
-    lg1 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
-    lg2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n'' %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
-    lg = !"git lg1"
-    track = "!f(){ git branch -r | grep -v '\\->' | while read remote; do git branch --track \"${remote#origin/}\" \"$remote\" 2>/dev/null; done; git fetch --all; git pull --all; }; f"
+	lg1 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
+	lg2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n'' %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
+	lg = !"git lg1"
+	track = "!f(){ git branch -r | grep -v '\\->' | while read remote; do git branch --track \"${remote#origin/}\" \"$remote\" 2>/dev/null; done; git fetch --all; git pull --all; }; f"
 [init]
-    defaultBranch = master
+	defaultBranch = master
 [pull]
-    rebase = false
+	rebase = merge
+	ff = only
 [rebase]
-    autoSquash = false
+	autoSquash = false
 [filter "lfs"]
-    clean = git-lfs clean -- %f
-    smudge = git-lfs smudge -- %f
-    process = git-lfs filter-process
-    required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
 [sendemail]
-    smtpencryption = tls
-    smtpserver = smtp.concord.sh
-    smtpuser = me@concord.sh
-    smtpserverport = 587
-    suppresscc = self
+	smtpencryption = tls
+	smtpserver = smtp.concord.sh
+	smtpuser = me@concord.sh
+	smtpserverport = 587
+	suppresscc = self
+[push]
+	gpgsign = 1
+	default = simple
