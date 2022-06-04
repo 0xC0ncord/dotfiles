@@ -64,7 +64,4 @@ function main {
     if command -v sxiv &>/dev/null; then
         alias sxiv='sxiv -a'
     fi
-    if command -v desmume &>/dev/null; then
-        alias desmume='desmume --cpu-mode=1'
-    fi
 }
