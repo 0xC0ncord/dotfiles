@@ -32,5 +32,4 @@
 	smtpserverport = 587
 	suppresscc = self
 [push]
-	gpgsign = 1
 	default = simple
