@@ -2,7 +2,7 @@ IMAPStore me@concord.sh-remote
     Host imap.concord.sh
     Port 993
     User me@concord.sh
-    PassCmd "pass me@concord.sh"
+    PassCmd "pass concord.sh/me"
     AuthMechs LOGIN
     SSLType IMAPS
     CertificateFile /etc/ssl/certs/ca-certificates.crt
@@ -10,7 +10,7 @@ IMAPStore me@concord.sh-remote
 MaildirStore me@concord.sh-local
     Subfolders Verbatim
     Path ~/.local/share/mail/me@concord.sh/
-    Inbox ~/.local/share/mail/me@concord.sh/INBOX
+    Inbox ~/.local/share/mail/me@concord.sh/Inbox
 
 Channel me@concord.sh
     Far :me@concord.sh-remote:
@@ -26,7 +26,7 @@ IMAPStore concord@fuwafuwatime.moe-remote
     Host imap.fuwafuwatime.moe
     Port 993
     User concord@fuwafuwatime.moe
-    PassCmd "pass concord@fuwafuwatime.moe"
+    PassCmd "pass fuwafuwatime.moe/concord/mail"
     AuthMechs LOGIN
     SSLType IMAPS
     CertificateFile /etc/ssl/certs/ca-certificates.crt
@@ -34,7 +34,7 @@ IMAPStore concord@fuwafuwatime.moe-remote
 MaildirStore concord@fuwafuwatime.moe-local
     Subfolders Verbatim
     Path ~/.local/share/mail/concord@fuwafuwatime.moe/
-    Inbox ~/.local/share/mail/concord@fuwafuwatime.moe/INBOX
+    Inbox ~/.local/share/mail/concord@fuwafuwatime.moe/Inbox
 
 Channel concord@fuwafuwatime.moe
     Far :concord@fuwafuwatime.moe-remote:
@@ -50,7 +50,7 @@ IMAPStore tonytheslayer@gmail.com-remote
     Host imap.gmail.com
     Port 993
     User tonytheslayer@gmail.com
-    PassCmd "pass mutt-wizard-gmail"
+    PassCmd "pass google.com/tonytheslayer@gmail.com.app.gmail"
     AuthMechs LOGIN
     SSLType IMAPS
     CertificateFile /etc/ssl/certs/ca-certificates.crt
@@ -58,11 +58,35 @@ IMAPStore tonytheslayer@gmail.com-remote
 MaildirStore tonytheslayer@gmail.com-local
     Subfolders Verbatim
     Path ~/.local/share/mail/tonytheslayer@gmail.com/
-    Inbox ~/.local/share/mail/tonytheslayer@gmail.com/INBOX
+    Inbox ~/.local/share/mail/tonytheslayer@gmail.com/Inbox
 
 Channel tonytheslayer@gmail.com
     Far :tonytheslayer@gmail.com-remote:
     Near :tonytheslayer@gmail.com-local:
+    Patterns * !"[Gmail]/All Mail"
+    Expunge Both
+    Create Both
+    SyncState *
+    MaxMessages 0
+    ExpireUnread no
+
+IMAPStore concord@gentoo.org-remote
+    Host dev.gentoo.org
+    Port 993
+    User concord
+    PassCmd "pass dev.gentoo.org/concord"
+    AuthMechs LOGIN
+    SSLType IMAPS
+    CertificateFile /etc/ssl/certs/ca-certificates.crt
+
+MaildirStore concord@gentoo.org-local
+    Subfolders Verbatim
+    Path ~/.local/share/mail/concord@gentoo.org/
+    Inbox ~/.local/share/mail/concord@gentoo.org/Inbox
+
+Channel concord@gentoo.org
+    Far :concord@gentoo.org-remote:
+    Near :concord@gentoo.org-local:
     Patterns * !"[Gmail]/All Mail"
     Expunge Both
     Create Both
