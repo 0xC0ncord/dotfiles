@@ -24,3 +24,10 @@ port 587
 from tonytheslayer@gmail.com
 user tonytheslayer@gmail.com
 passwordeval "pass mutt-wizard-gmail"
+
+account concord@gentoo.org
+host dev.gentoo.org
+port 587
+from concord@gentoo.org
+user concord@gentoo.org
+passwordeval "pass dev.gentoo.org/concord"
