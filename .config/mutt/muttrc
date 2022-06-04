@@ -86,6 +86,8 @@ macro attach,compose \cb "<pipe-entry> urlscan<Enter>" "Extract URLs with urlsca
 set sidebar_visible = yes
 set sidebar_width = 20
 set sidebar_short_path = yes
+set sidebar_folder_indent = yes
+set sidebar_indent_string = '  '
 set sidebar_next_new_wrap = yes
 set mail_check_stats
 set sidebar_format = '%D%?F? [%F]?%* %?N?%N/? %?S?%S?'
@@ -173,6 +175,7 @@ source $HOME/.config/mutt/accounts/1-me@concord.sh.muttrc
 macro index,pager i1 '<sync-mailbox><enter-command>source $HOME/.config/mutt/accounts/1-me@concord.sh.muttrc<enter><change-folder>!<enter>;<check-stats>' "switch to me@concord.sh"
 macro index,pager i2 '<sync-mailbox><enter-command>source $HOME/.config/mutt/accounts/2-concord@fuwafuwatime.moe.muttrc<enter><change-folder>!<enter>;<check-stats>' "switch to concord@fuwafuwatime.moe"
 macro index,pager i3 '<sync-mailbox><enter-command>source $HOME/.config/mutt/accounts/3-tonytheslayer@gmail.com.muttrc<enter><change-folder>!<enter>;<check-stats>' "switch to tonytheslayer@gmail.com"
+macro index,pager i4 '<sync-mailbox><enter-command>source $HOME/.config/mutt/accounts/4-concord@gentoo.org.muttrc<enter><change-folder>!<enter>;<check-stats>' "switch to concord@gentoo.org"
 
 # Mailing lists
 set reply_to = 'ask-yes'
